@@ -1,0 +1,31 @@
+export const colors = {
+  dark: false,
+  colors: {
+    background: '#F1F1F2',
+    primary: '#079246',
+    black: '#202020',
+    secondary: '#11b624',
+    error: '#db222a',
+    info: '#3f51b5',
+    success: '#340068',
+    warning: '#f37123',
+  },
+  variables: {
+    'border-color': '#000000',
+    'border-opacity': 0.12,
+    'high-emphasis-opacity': 0.87,
+    'medium-emphasis-opacity': 0.60,
+    'disabled-opacity': 0.38,
+    'idle-opacity': 0.04,
+    'hover-opacity': 0.04,
+    'focus-opacity': 0.12,
+    'selected-opacity': 0.08,
+    'activated-opacity': 0.12,
+    'pressed-opacity': 0.12,
+    'dragged-opacity': 0.08,
+    'theme-kbd': '#212529',
+    'theme-on-kbd': '#FFFFFF',
+    'theme-code': '#F5F5F5',
+    'theme-on-code': '#000000',
+  }
+}

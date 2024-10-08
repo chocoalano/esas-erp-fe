@@ -1,0 +1,10 @@
+.sweet-confirm-button-class {
+    color: #ffffff; /* Warna teks tombol konfirmasi */
+    background-color: #079246; /* Warna latar belakang tombol konfirmasi */
+}
+  
+.sweet-cancel-button-class {
+    color: #ffffff; /* Warna teks tombol batal */
+    background-color: #f37123; /* Warna latar belakang tombol batal */
+}
+  
