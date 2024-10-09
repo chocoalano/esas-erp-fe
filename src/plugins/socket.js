@@ -1,7 +1,7 @@
 // src/plugins/socket.js
 import { io } from 'socket.io-client'
 
-const socket = io('http://127.0.0.1:3333')
+const socket = io('https://api.sinergiabadisentosa.com')
 
 export default {
   install(app) {

@@ -4,10 +4,10 @@ import { useAuthStore } from '@/stores/apps/auth'
 export default {
   methods: {
     baseApiUrl() {
-      return 'http://172.16.0.101:3333'
+      return 'https://api.sinergiabadisentosa.com'
     },
     baseFileUrl() {
-      return 'http://172.16.0.101:3333/files'
+      return 'https://api.sinergiabadisentosa.com/files'
     },
     errInput(dataArray, keyname) {
       if (dataArray.length > 0) {
