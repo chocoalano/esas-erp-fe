@@ -72,7 +72,6 @@ const menuModel = ref(false)
 const auth = useAuthStore();
 const signOut = () => {
   auth.logout()
-  router.push({ path: 'login' });
 }
 </script>
 

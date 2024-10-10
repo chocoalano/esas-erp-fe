@@ -36,7 +36,6 @@ const tools = ref([
 ]);
 const signOut = () => {
   auth.logout()
-  router.push({ path: 'login' });
 }
 
 const drawerSubtitle = () => {

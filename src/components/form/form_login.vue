@@ -2,6 +2,7 @@
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/apps/auth';
+import imgLogo from '@/assets/logo_esas.svg'
 
 const initialState = {
   nik: '',
@@ -41,7 +42,7 @@ const SubmitEvent = async () => {
     <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-4">
         <div>
-          <h2 class="text-h4 font-weight-black text-orange">HRIS ESAS!</h2>
+          <v-img :width="117" aspect-ratio="16/9" cover :src="imgLogo" class="mb-5 mx-auto"></v-img>
 
           <p class="text-body-2 mb-4">
             Lakukan semua kegiatan administrasi anda bersama <strong>esas</strong>

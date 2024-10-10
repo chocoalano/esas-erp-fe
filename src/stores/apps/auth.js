@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon'
 import Swal from 'sweetalert2'
 import api from '@/plugins/axios'
 
@@ -73,6 +73,7 @@ export const useAuthStore = defineStore('auth', {
       try {
         await api.get('/logout');
         this.removeCredential();
+        window.location.reload()
       } catch (error) {
         this.showAlert(error.status, error.message)
       }
@@ -87,6 +88,7 @@ export const useAuthStore = defineStore('auth', {
       } catch (error) {
         this.showAlert(error.status, error.message)
         this.removeCredential();
+        window.location.reload()
       }
     },
     async assignPermissionAndRole(newPermissions, newRole) {
