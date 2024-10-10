@@ -2,10 +2,8 @@
 import Swal from 'sweetalert2';
 import { useGroupAbsenStore } from '@/stores/apps/master-data/group_absen';
 import { computed, ref } from 'vue';
-import globalMixin from '@/mixins/globalMixin';
 
 const store = useGroupAbsenStore();
-const { errInput } = globalMixin.methods;
 
 // State to keep track of expanded rows
 const expanded = ref([]);

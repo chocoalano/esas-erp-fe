@@ -2,12 +2,11 @@
 import Swal from 'sweetalert2';
 import { useLaporanBugStore } from '@/stores/apps/configs/laporan_bug';
 import { computed, ref } from 'vue';
-import globalMixin from '@/mixins/globalMixin';
 import DialogForm from './dialogForm.vue';
+import { baseFileUrl } from "@/utils/api";
 
 // Store initialization
 const store = useLaporanBugStore();
-const { hasRole, baseFileUrl } = globalMixin.methods;
 
 // Computed properties for reactive data
 const list = computed(() => store.meta.data);
@@ -24,10 +23,6 @@ const headers = ref([
   { title: 'Status progres', sortable: false, key: 'repairProgres' },
   { title: '#', sortable: false, key: 'actions', align: 'end' },
 ]);
-
-// Permission checks
-const cekPermissionUpdate = () => hasRole('Developer') || hasRole('Administrator');
-const cekPermissionDelete = () => hasRole('Developer') || hasRole('Administrator');
 
 // Handle creating a new announcement
 const handleCreate = () => {
@@ -115,8 +110,8 @@ const handleDelete = (id) => {
 
     <!-- Action icons for edit and delete -->
     <template v-slot:item.actions="{ item }">
-      <v-icon v-if="cekPermissionUpdate()" class="me-2" size="small" @click="handleEdit(item.id)" icon="mdi-pencil" />
-      <v-icon v-if="cekPermissionDelete()" class="me-2" size="small" @click="handleDelete(item.id)" icon="mdi-delete" />
+      <v-icon v-if="hasRole('Developer') || hasRole('Administrator')" class="me-2" size="small" @click="handleEdit(item.id)" icon="mdi-pencil" />
+      <v-icon v-if="hasRole('Developer') || hasRole('Administrator')" class="me-2" size="small" @click="handleDelete(item.id)" icon="mdi-delete" />
     </template>
   </v-data-table-server>
 </template>

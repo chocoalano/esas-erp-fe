@@ -2,10 +2,8 @@
 import Swal from 'sweetalert2';
 import { useJadwalGroupAbsenStore } from '@/stores/apps/master-data/jadwal_group_absen';
 import { computed, ref } from 'vue';
-import globalMixin from '@/mixins/globalMixin';
 
 const store = useJadwalGroupAbsenStore();
-const { errInput } = globalMixin.methods;
 
 // State to track editable rows
 const editableRows = ref([]); // Array of ids for rows being edited

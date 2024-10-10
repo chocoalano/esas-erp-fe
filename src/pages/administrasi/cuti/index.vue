@@ -2,11 +2,9 @@
 import Swal from 'sweetalert2';
 import { useCutiStore } from '@/stores/apps/administrasi/cuti';
 import { computed, ref } from 'vue';
-import globalMixin from '@/mixins/globalMixin';
 import DialogForm from './dialogForm.vue';
 
 const store = useCutiStore();
-const { hasPermissions, hasRole } = globalMixin.methods;
 
 const list = computed(() => store.meta.data);
 const totallist = computed(() => store.meta.totaldata);
@@ -24,9 +22,6 @@ const headers = ref([
   { title: 'Kategori', sortable: false, key: 'category' },
   { title: '#', sortable: false, key: 'actions', align: 'end' },
 ]);
-
-const cekPermissionUpdate = () => hasPermissions('cuti-update') || hasRole('Developer') || hasRole('Administrator');
-const cekPermissionDelete = () => hasPermissions('cuti-delete') || hasRole('Developer') || hasRole('Administrator');
 // Use object lookup for icons and colors
 const iconLookup = {
   y: { icon: 'mdi-check-circle-outline', color: 'primary' },
@@ -147,8 +142,8 @@ const handleDelete = (id) => {
     <!-- expanded list data:end -->
     <!-- Action icons for edit and delete -->
     <template v-slot:item.actions="{ item }">
-      <v-icon v-if="cekPermissionUpdate()" class="me-2" size="small" @click="handleEdit(item.id)" icon="mdi-pencil" />
-      <v-icon class="me-2" size="small" @click="handleDelete(item.id)" icon="mdi-delete" v-if="cekPermissionDelete()" />
+      <v-icon v-if="hasPermissions('cuti-update') || hasRole('Developer') || hasRole('Administrator')" class="me-2" size="small" @click="handleEdit(item.id)" icon="mdi-pencil" />
+      <v-icon class="me-2" size="small" @click="handleDelete(item.id)" icon="mdi-delete" v-if="hasPermissions('cuti-delete') || hasRole('Developer') || hasRole('Administrator')" />
     </template>
   </v-data-table-server>
 </template>

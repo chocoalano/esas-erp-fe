@@ -3,12 +3,11 @@ import { ref } from "vue";
 import { useAppStore } from '@/stores/app';
 import { useAuthStore } from '@/stores/apps/auth';
 import { useRouter } from 'vue-router';
-import globalMixin from '@/mixins/globalMixin'
+import { baseFileUrl } from '@/utils/api';
 
 const store = useAppStore();
 const auth = useAuthStore();
 const router = useRouter();
-const { hasPermissions, hasRole, baseFileUrl } = globalMixin.methods
 
 const masterdata = ref([
   { text: 'Data Pengguna', icon: 'mdi-account-multiple', link: 'users-data', authorization: 'view_user' },

@@ -2,11 +2,9 @@
 import Swal from 'sweetalert2';
 import { usePerubahanShiftStore } from '@/stores/apps/administrasi/perubahan_shift';
 import { computed, ref } from 'vue';
-import globalMixin from '@/mixins/globalMixin';
 import DialogForm from './dialogForm.vue';
 
 const store = usePerubahanShiftStore();
-const { hasPermissions, hasRole } = globalMixin.methods;
 
 const list = computed(() => store.meta.data);
 const totallist = computed(() => store.meta.totaldata);
@@ -21,9 +19,6 @@ const headers = ref([
   { title: 'Status', sortable: false, key: 'status' },
   { title: '#', sortable: false, key: 'actions', align: 'end' },
 ]);
-
-const cekPermissionUpdate = () => hasPermissions('perubahan-shift-update') || hasRole('Developer') || hasRole('Administrator');
-const cekPermissionDelete = () => hasPermissions('perubahan-shift-delete') || hasRole('Developer') || hasRole('Administrator');
 // Use object lookup for icons and colors
 const iconLookup = {
   y: { icon: 'mdi-check-circle-outline', color: 'primary' },
@@ -138,8 +133,8 @@ const handleDelete = (id) => {
     </template>
     <!-- Action icons for edit and delete -->
     <template v-slot:item.actions="{ item }">
-      <v-icon v-if="cekPermissionUpdate()" class="me-2" size="small" @click="handleEdit(item.id)" icon="mdi-pencil" />
-      <v-icon class="me-2" size="small" @click="handleDelete(item.id)" icon="mdi-delete" v-if="cekPermissionDelete()" />
+      <v-icon v-if="hasPermissions('perubahan-shift-update') || hasRole('Developer') || hasRole('Administrator')" class="me-2" size="small" @click="handleEdit(item.id)" icon="mdi-pencil" />
+      <v-icon class="me-2" size="small" @click="handleDelete(item.id)" icon="mdi-delete" v-if="hasPermissions('perubahan-shift-delete') || hasRole('Developer') || hasRole('Administrator')" />
     </template>
   </v-data-table-server>
 </template>

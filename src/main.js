@@ -22,7 +22,7 @@ registerPlugins(app)
 requestNotificationPermission()
 
 // Register global mixins
-app.mixin(globalMixin)
+app.use(globalMixin)
 
 // Register global components
 Object.entries(components).forEach(([name, component]) => {

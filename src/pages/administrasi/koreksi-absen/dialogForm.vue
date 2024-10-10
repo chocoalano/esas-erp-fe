@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
-import globalMixin from '@/mixins/globalMixin';
 import { useKoreksiAbsenStore } from '@/stores/apps/administrasi/koreksi_absen'
 
 const store = useKoreksiAbsenStore()
@@ -11,8 +10,6 @@ const forms = computed(() => store.forms)
 const usersOptions = computed(() => store.usersOptions)
 const usersLineApprovalOptions = computed(() => store.usersLineApprovalOptions)
 const usersHrgaApprovalOptions = computed(() => store.usersHrgaApprovalOptions)
-
-const { errInput } = globalMixin.methods
 
 const close = () => {
   store.dialog = !store.dialog
@@ -38,7 +35,6 @@ watch(() => store.dialog, (v) => {
   }
 })
 
-const handleError = (field) => errInput(errors.value, field);
 </script>
 <template>
   <v-dialog v-model="dialog" max-width="900px">
@@ -51,25 +47,25 @@ const handleError = (field) => errInput(errors.value, field);
         <v-row>
           <v-col cols="12" md="4" sm="12">
             <SelectSearchField label="Pilih pengguna" :items="usersOptions" v-model="forms.userId"
-              @update:model-value="handleChangeFetchUser(forms.userId)" :err="handleError('userId')"/>
+              @update:model-value="handleChangeFetchUser(forms.userId)" :err="errInput(errors.value, 'userId')"/>
           </v-col>
           <v-col cols="12" md="4" sm="12">
-            <v-text-field label="Pilih jam masuk diajukan" type="time" variant="outlined" density="compact" v-model="forms.timeinAdjustment" :error-messages="handleError('timeinAdjustment')"/>
+            <v-text-field label="Pilih jam masuk diajukan" type="time" variant="outlined" density="compact" v-model="forms.timeinAdjustment" :error-messages="errInput(errors.value, 'timeinAdjustment')"/>
           </v-col>
           <v-col cols="12" md="4" sm="12">
-            <v-text-field label="Pilih jam pulang diajukan" type="time" variant="outlined" density="compact" v-model="forms.timeoutAdjustment" :error-messages="handleError('timeoutAdjustment')"/>
+            <v-text-field label="Pilih jam pulang diajukan" type="time" variant="outlined" density="compact" v-model="forms.timeoutAdjustment" :error-messages="errInput(errors.value, 'timeoutAdjustment')"/>
           </v-col>
           <v-col cols="12" md="4" sm="12">
-            <DatePickerField label="Tanggal" v-model="forms.dateAdjustment" :err="handleError('dateAdjustment')" />
+            <DatePickerField label="Tanggal" v-model="forms.dateAdjustment" :err="errInput(errors.value, 'dateAdjustment')" />
           </v-col>
           <v-col cols="12" md="4" sm="12">
-            <SelectSearchField label="Pilih line approval" :items="usersLineApprovalOptions" v-model="forms.lineId" :err="handleError('lineId')"/>
+            <SelectSearchField label="Pilih line approval" :items="usersLineApprovalOptions" v-model="forms.lineId" :err="errInput(errors.value, 'lineId')"/>
           </v-col>
           <v-col cols="12" md="4" sm="12">
-            <SelectSearchField label="Pilih HRGA approval" :items="usersHrgaApprovalOptions" v-model="forms.hrId" :err="handleError('hrId')"/>
+            <SelectSearchField label="Pilih HRGA approval" :items="usersHrgaApprovalOptions" v-model="forms.hrId" :err="errInput(errors.value, 'hrId')"/>
           </v-col>
           <v-col cols="12" md="12" sm="12">
-            <v-textarea label="Keterangan" variant="outlined" v-model="forms.notes" :error-messages="handleError('notes')" />
+            <v-textarea label="Keterangan" variant="outlined" v-model="forms.notes" :error-messages="errInput(errors.value, 'notes')" />
           </v-col>
         </v-row>
       </v-card-text>

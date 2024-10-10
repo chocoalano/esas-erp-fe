@@ -1,6 +1,5 @@
 <script setup>
 import { watch } from 'vue'
-import globalMixin from '@/mixins/globalMixin';
 import { useLaporanBugStore } from '@/stores/apps/configs/laporan_bug'
 
 const store = useLaporanBugStore()
@@ -9,8 +8,6 @@ const errors = computed(() => store.errors)
 const dialog = computed(() => store.dialog)
 const forms = computed(() => store.forms)
 const imgDialog = computed(() => store.imgDialog)
-
-const { errInput, baseFileUrl } = globalMixin.methods
 
 const close = () => {
   store.dialog = !store.dialog

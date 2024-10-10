@@ -1,6 +1,5 @@
 <template>
   <SheetWelcome class="mb-5"/>
-  <TableUltah class="mb-5"/>
   <GridCards />
   <v-row>
     <v-col cols="12" sm="12" md="6">
@@ -10,6 +9,7 @@
       <ListAbsen />
     </v-col>
   </v-row>
+  <TableUltah class="mt-5"/>
 </template>
 
 <script setup>

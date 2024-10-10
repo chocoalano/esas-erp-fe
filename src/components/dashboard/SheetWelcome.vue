@@ -1,10 +1,11 @@
 <script setup>
 import { useDashboardStore } from '@/stores/dashboard';
 import { ref, onMounted } from 'vue';
-import imgBirthday from '@/assets/birthday.svg'
-import imgOffice from '@/assets/office.svg'
+import { useAuthStore } from '@/stores/apps/auth';
+import { baseFileUrl } from "@/utils/api";
 
 const store = useDashboardStore();
+const storeAuth = useAuthStore();
 const ultah = computed(() => store.ultah);
 const quote = computed(() => store.quote);
 // Fungsi untuk mengembalikan jam saat ini
@@ -49,9 +50,6 @@ const ucapanSelamat = () => {
     return 'Selamat malam';
   }
 };
-const imageCover = () => {
-  return ultah.lenght > 0 ? imgBirthday : imgOffice
-};
 </script>
 
 <template>
@@ -59,7 +57,9 @@ const imageCover = () => {
     <v-container fluid>
       <v-row>
         <v-col cols="12" md="3">
-          <v-img height="200" :src="imageCover()" cover></v-img>
+          <v-card flat>
+            <v-img height="200" :lazy-src="`${baseFileUrl()}/${storeAuth.user.image}`" :src="`${baseFileUrl()}/${storeAuth.user.image}`" cover />
+          </v-card>
         </v-col>
 
         <v-col cols="12" md="9">

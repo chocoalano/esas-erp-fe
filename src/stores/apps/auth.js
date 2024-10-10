@@ -60,14 +60,9 @@ export const useAuthStore = defineStore('auth', {
     async login(userData) {
       try {
         const response = await api.post('/login', userData);
-        const { token, abilities, role, account, permission } = response.data;
+        const { token } = response.data;
 
         this.token = token;
-        this.permission = abilities;
-        this.role = role;
-        this.user = account;
-        this.permission = permission;
-
         localStorage.setItem('token', token);
         await this.profile()
       } catch (error) {
@@ -76,7 +71,7 @@ export const useAuthStore = defineStore('auth', {
     },
     async logout() {
       try {
-        await api.post('/logout');
+        await api.get('/logout');
         this.removeCredential();
       } catch (error) {
         this.showAlert(error.status, error.message)
@@ -85,16 +80,26 @@ export const useAuthStore = defineStore('auth', {
     async profile() {
       try {
         const response = await api.get('/user-auth');
-        const { token, role, account, permission } = response.data;
-        this.assignFormData(account);
-        this.token = token || this.token;
-        this.role = role;
-        this.user = account;
-        this.permission = permission;
+        const { account, role, permission } = response.data;
+        this.user = account
+        await this.assignFormData(account)
+        await this.assignPermissionAndRole(permission, role)
       } catch (error) {
         this.showAlert(error.status, error.message)
         this.removeCredential();
       }
+    },
+    async assignPermissionAndRole(newPermissions, newRole) {
+      if (this.permission !== null) {
+        const combinedPermissions = new Set([...this.permission, ...newPermissions]);
+        this.permission = Array.from(combinedPermissions);
+      }
+      this.permission = [...newPermissions];
+      if (this.role !== null) {
+        const combinedRoles = new Set([...this.role, ...newRole]);
+        this.role = Array.from(combinedRoles);
+      }
+      this.role = [...newRole];
     },
     async submitProfile(form) {
       this.loadingProfile = true
@@ -127,7 +132,7 @@ export const useAuthStore = defineStore('auth', {
         }
       });
     },
-    assignFormData(account) {
+    async assignFormData(account) {
       const {
         name,
         nik,

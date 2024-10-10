@@ -2,12 +2,11 @@
 import { useRouter } from 'vue-router';
 import { useAppStore } from '@/stores/app';
 import { useDashboardStore } from '@/stores/dashboard';
-import globalMixin from '@/mixins/globalMixin'
+import { baseFileUrl } from '@/utils/api'
 import { onMounted } from 'vue';
 const app = useAppStore()
 const store = useDashboardStore()
 const router = useRouter();
-const { baseFileUrl } = globalMixin.methods;
 const isDrawer = computed(() => app.isDrawer);
 const list = computed(() => store.absenTerlambat.data);
 

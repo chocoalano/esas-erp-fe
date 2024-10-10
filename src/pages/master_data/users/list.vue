@@ -1,11 +1,8 @@
 <script setup>
 import Swal from 'sweetalert2'
-import globalMixin from '@/mixins/globalMixin'
 import { useUsersStore } from '@/stores/apps/master-data/users'
 import { useUsersTables } from './composables/useUsersTables'
 import { useRouter } from 'vue-router'
-
-const { hasPermissions, hasRole } = globalMixin.methods
 const router = useRouter()
 const store = useUsersStore()
 const {

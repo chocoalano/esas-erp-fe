@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, watch } from 'vue'
-import globalMixin from '@/mixins/globalMixin';
 import { useCutiStore } from '@/stores/apps/administrasi/cuti'
 
 const store = useCutiStore()
@@ -11,8 +10,6 @@ const forms = computed(() => store.forms)
 const usersOptions = computed(() => store.usersOptions)
 const usersLineApprovalOptions = computed(() => store.usersLineApprovalOptions)
 const usersHrgaApprovalOptions = computed(() => store.usersHrgaApprovalOptions)
-
-const { errInput } = globalMixin.methods
 
 const close = () => {
   store.dialog = !store.dialog
@@ -35,7 +32,6 @@ watch(() => store.dialog, (v) => {
   }
 })
 
-const handleError = (field) => errInput(errors.value, field);
 const category = ref([
   { id: 'half', name: 'Setengah hari' },
   { id: 'full', name: 'Sepenuhnya' },
@@ -72,29 +68,29 @@ const type = ref([
               @update:model-value="handleChangeFetchUser(forms.userId)" />
           </v-col>
           <v-col cols="12" md="4" sm="12">
-            <DatePickerField label="Tanggal mulai" v-model="forms.startDate" :err="handleError('startDate')" />
+            <DatePickerField label="Tanggal mulai" v-model="forms.startDate" :err="errInput(errors.value ,'startDate')" />
           </v-col>
           <v-col cols="12" md="4" sm="12">
-            <DatePickerField label="Tanggal selesai" v-model="forms.endDate" :err="handleError('endDate')" />
+            <DatePickerField label="Tanggal selesai" v-model="forms.endDate" :err="errInput(errors.value ,'endDate')" />
           </v-col>
           <v-col cols="12" md="4" sm="12">
             <v-text-field label="Jam mulai" type="time" variant="outlined" density="compact" v-model="forms.startTime"
-              :error-messages="handleError('startTime')" />
+              :error-messages="errInput(errors.value ,'startTime')" />
           </v-col>
           <v-col cols="12" md="4" sm="12">
             <v-text-field label="Jam selesai" type="time" variant="outlined" density="compact" v-model="forms.endTime"
-              :error-messages="handleError('endTime')" />
+              :error-messages="errInput(errors.value ,'endTime')" />
           </v-col>
           <v-col cols="12" md="4" sm="12">
             <SelectField label="Kategori Cuti" :items="category" v-model="forms.category"
-              :error-messages="handleError('category')" />
+              :error-messages="errInput(errors.value ,'category')" />
           </v-col>
           <v-col cols="12" md="12" sm="12">
             <v-textarea label="Keterangan" variant="outlined" v-model="forms.description"
-              :error-messages="handleError('description')" />
+              :error-messages="errInput(errors.value ,'description')" />
           </v-col>
           <v-col cols="12" md="4" sm="12">
-            <SelectField label="Tipe Cuti" :items="type" v-model="forms.type" :error-messages="handleError('type')" />
+            <SelectField label="Tipe Cuti" :items="type" v-model="forms.type" :error-messages="errInput(errors.value ,'type')" />
           </v-col>
           <v-col cols="12" md="4" sm="12">
             <SelectSearchField label="Pilih line approval" :items="usersLineApprovalOptions" v-model="forms.userLine" />

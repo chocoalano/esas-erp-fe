@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
-import globalMixin from '@/mixins/globalMixin';
 import Editor from '@tinymce/tinymce-vue'
 import { usePengumumanStore } from '@/stores/apps/master-data/pengumuman'
 
@@ -18,8 +17,6 @@ const editorConfig = ref({
   branding: false,
 })
 
-const { errInput } = globalMixin.methods
-
 const close = () => {
   store.dialog = !store.dialog
 }
@@ -33,8 +30,6 @@ watch(() => store.dialog, (v) => {
     store.resetForms()
   }
 })
-
-const handleError = (field) => errInput(errors.value, field);
 </script>
 <template>
   <v-dialog v-model="dialog" max-width="900px">
@@ -47,7 +42,7 @@ const handleError = (field) => errInput(errors.value, field);
         <v-row>
           <v-col cols="12" md="4" sm="12">
             <v-text-field label="Judul pengumuman" variant="outlined" density="compact" v-model="forms.title"
-              :error-messages="handleError('timeinAdjustment')" />
+              :error-messages="errInput(errors.value, 'timeinAdjustment')" />
           </v-col>
           <v-col cols="12" md="4" sm="12">
             <v-switch v-model="forms.publish"

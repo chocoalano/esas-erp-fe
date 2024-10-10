@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
-import globalMixin from '@/mixins/globalMixin';
 import { usePerubahanShiftStore } from '@/stores/apps/administrasi/perubahan_shift'
 
 const store = usePerubahanShiftStore()
@@ -14,7 +13,6 @@ const shiftOptions = computed(() => store.shiftOptions)
 const usersLineApprovalOptions = computed(() => store.usersLineApprovalOptions)
 const usersHrgaApprovalOptions = computed(() => store.usersHrgaApprovalOptions)
 
-const { errInput } = globalMixin.methods
 
 const close = () => {
   store.dialog = !store.dialog
@@ -45,8 +43,6 @@ const statusOption = ref([
 { id: 'n', name: 'Ditolak' },
 { id: 'w', name: 'Menunggu persetujuan' },
 ])
-
-const handleError = (field) => errInput(errors.value, field);
 </script>
 <template>
   <v-dialog v-model="dialog" max-width="900px">
@@ -62,11 +58,11 @@ const handleError = (field) => errInput(errors.value, field);
               @update:model-value="handleChangeFetchUser(forms.userId)" />
           </v-col>
           <v-col cols="12" md="3" sm="12">
-            <DatePickerField label="Tanggal" v-model="forms.date" :err="handleError('date')" @update:model-value="handleChangeFetchSchedule(forms.userId, forms.date)"/>
+            <DatePickerField label="Tanggal" v-model="forms.date" :err="errInput(errors.value, 'date')" @update:model-value="handleChangeFetchSchedule(forms.userId, forms.date)"/>
           </v-col>
           <v-col cols="12" md="3" sm="12">
             <SelectField label="Apakah pengajuan ini disetujui?" :items="statusOption" v-model="forms.status"
-              :err="handleError('status')" />
+              :err="errInput(errors.value, 'status')" />
           </v-col>
           <v-col cols="12" md="3" sm="12">
             <SelectSearchField label="Pilih Grup Absen" :items="groupAbsenOptions" v-model="forms.currentGroup" disabled/>

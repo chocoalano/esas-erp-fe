@@ -2,10 +2,8 @@
 import Swal from 'sweetalert2';
 import { useLemburStore } from '@/stores/apps/administrasi/lembur';
 import { computed, ref } from 'vue';
-import globalMixin from '@/mixins/globalMixin';
 
 const store = useLemburStore();
-const { hasPermissions, hasRole } = globalMixin.methods;
 
 // State to track editable rows
 const editableRows = ref([])
@@ -83,9 +81,6 @@ const loadItems = async ({ page, itemsPerPage, search }) => {
 
 // Check if a row is currently being edited
 const isRowEditable = (id) => editableRows.value.includes(id);
-
-const cekPermissionUpdate = () => hasPermissions('lembur-update') || hasRole('Developer') || hasRole('Administrator');
-const cekPermissionDelete = () => hasPermissions('lembur-delete') || hasRole('Developer') || hasRole('Administrator');
 const iconMapping = {
   y: { icon: 'mdi-check-circle-outline', color: 'primary' },
   n: { icon: 'mdi-close-circle-outline', color: 'error' },
@@ -232,13 +227,13 @@ const handleChangeFetchApproval = (userId) => {
 
     <!-- Action icons for edit and delete -->
     <template v-slot:item.actions="{ item }">
-      <v-icon v-if="!isRowEditable(item.id) && cekPermissionUpdate()" class="me-2" size="small"
+      <v-icon v-if="!isRowEditable(item.id) && hasPermissions('lembur-update') || hasRole('Developer') || hasRole('Administrator')" class="me-2" size="small"
         @click="handleEdit(item.id)" icon="mdi-pencil" />
       <v-icon v-if="isRowEditable(item.id)" class="me-2" size="small" color="primary" @click="handleSaveEdit(item)"
         icon="mdi-content-save" />
       <v-icon v-if="isRowEditable(item.id)" class="me-2" size="small" color="error" @click="handleEdit(item.id)"
         icon="mdi-close-circle" />
-      <v-icon class="me-2" size="small" @click="handleDelete(item.id)" icon="mdi-delete" v-if="cekPermissionDelete()" />
+      <v-icon class="me-2" size="small" @click="handleDelete(item.id)" icon="mdi-delete" v-if="hasPermissions('lembur-delete') || hasRole('Developer') || hasRole('Administrator')" />
     </template>
   </v-data-table-server>
 </template>

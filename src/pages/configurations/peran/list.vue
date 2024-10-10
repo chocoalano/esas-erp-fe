@@ -3,11 +3,9 @@ import Swal from 'sweetalert2'
 import { useRoleStore } from '@/stores/apps/configs/role'
 import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import globalMixin from '@/mixins/globalMixin'
 
 const store = useRoleStore()
 const router = useRouter()
-const { hasRole } = globalMixin.methods;
 
 // Menggunakan ref untuk data yang bisa diubah
 const itemsPerPage = ref(store.datatables.limit)
@@ -32,9 +30,6 @@ watch([itemsPerPage, search, expanded], ([newItemsPerPage, newSearch, newExpande
   store.datatables.search = newSearch
   store.datatables.expanded = newExpanded
 })
-
-const cekPermissionUpdate = () => hasRole('Developer') || hasRole('Administrator');
-const cekPermissionDelete = () => hasRole('Developer') || hasRole('Administrator');
 
 const loadItems = async ({ page, itemsPerPage, search }) => {
   await store.fetchData({ page, itemsPerPage, search })
@@ -114,8 +109,8 @@ const creaeMove = () => {
     </template>
     <!-- Action icons for edit and delete -->
     <template v-slot:item.actions="{ item }">
-      <v-icon v-if="cekPermissionUpdate()" class="me-2" size="small" @click="handleEdit(item.id)" icon="mdi-pencil" />
-      <v-icon class="me-2" size="small" @click="handleDelete(item.id)" icon="mdi-delete" v-if="cekPermissionDelete()" />
+      <v-icon v-if="hasRole('Developer') || hasRole('Administrator')" class="me-2" size="small" @click="handleEdit(item.id)" icon="mdi-pencil" />
+      <v-icon class="me-2" size="small" @click="handleDelete(item.id)" icon="mdi-delete" v-if="hasRole('Developer') || hasRole('Administrator')" />
     </template>
   </v-data-table-server>
 </template>

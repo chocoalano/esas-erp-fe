@@ -1,10 +1,11 @@
 <script setup>
 import { useAppStore } from '@/stores/app'
+import { useAuthStore } from '@/stores/apps/auth';
 import { useRouter } from 'vue-router';
 import { onMounted, getCurrentInstance, onBeforeUnmount, ref } from 'vue'
-import globalMixin from '@/mixins/globalMixin'
+import { baseFileUrl } from '@/utils/api';
 import { showNotification } from '@/plugins/notification'
-import logo from '@/assets/logo.svg';
+import esaslogo from '@/assets/logo_esas_putih.svg';
 import notifikasiTone from '@/assets/sound/notifikasi.mp3'
 
 const { proxy } = getCurrentInstance();
@@ -12,7 +13,6 @@ const socket = proxy.$socket;
 
 const store = useAppStore();
 const router = useRouter();
-const { baseFileUrl } = globalMixin.methods;
 
 const list = computed(() => store.dataNotification.data);
 const totalInfo = computed(() => store.totalInfo);
@@ -30,7 +30,7 @@ const handleConnection = (data) => {
   store.fetchNotification()
   showNotification(data.title, {
     body: data.message,
-    icon: logo,
+    icon: esaslogo,
   })
 }
 // Menghubungkan socket saat komponen mounted dan membersihkannya saat unmount
@@ -69,10 +69,18 @@ const handleNotifClick = (id, type, payload) => {
   menuModel.value = !menuModel.value
 }
 const menuModel = ref(false)
+const auth = useAuthStore();
+const signOut = () => {
+  auth.logout()
+  router.push({ path: 'login' });
+}
 </script>
 
 <template>
-  <v-app-bar title="ESAS Application" flat style="position: fixed !important;" color="primary">
+  <v-app-bar flat style="position: fixed !important;" color="primary">
+    <template v-slot:title>
+      <v-img :src="esaslogo" max-width="100"></v-img>
+    </template>
     <template v-slot:prepend>
       <v-app-bar-nav-icon @click="store.toggleDrawer"></v-app-bar-nav-icon>
     </template>
@@ -115,7 +123,7 @@ const menuModel = ref(false)
       </v-menu>
 
       <v-btn icon>
-        <v-icon>mdi-logout</v-icon>
+        <v-icon @click="signOut">mdi-logout</v-icon>
       </v-btn>
     </template>
   </v-app-bar>

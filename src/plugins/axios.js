@@ -1,9 +1,7 @@
 // src/plugins/axios.js
 import axios from 'axios';
 import { useAuthStore } from '@/stores/apps/auth';
-import globalMixin from '@/mixins/globalMixin';
-
-const { baseApiUrl } = globalMixin.methods
+import { baseApiUrl } from '@/utils/api';
 const api = axios.create({
   baseURL: baseApiUrl(),
   timeout: 10000,

@@ -12,7 +12,8 @@ export const useDashboardStore = defineStore('dashboard', {
         icon: "mdi-account-group",
         value: 0,
         color: "surface",
-        color_circle: "primary"
+        color_circle: "primary",
+        name_route: "users-data"
       },
       {
         title: "Data Departemen",
@@ -20,7 +21,8 @@ export const useDashboardStore = defineStore('dashboard', {
         icon: "mdi-account-tag",
         value: 0,
         color: "surface",
-        color_circle: "secondary"
+        color_circle: "secondary",
+        name_route: "dept"
       },
       {
         title: "Data Posisi",
@@ -28,7 +30,8 @@ export const useDashboardStore = defineStore('dashboard', {
         icon: "mdi-account-hard-hat",
         value: 0,
         color: "surface",
-        color_circle: "info"
+        color_circle: "info",
+        name_route: "jabatan"
       },
       {
         title: "Data Absensi",
@@ -36,7 +39,8 @@ export const useDashboardStore = defineStore('dashboard', {
         icon: "mdi-fingerprint",
         value: 0,
         color: "surface",
-        color_circle: "error"
+        color_circle: "error",
+        name_route: "absen"
       }
     ],
     chartData: {
@@ -56,7 +60,7 @@ export const useDashboardStore = defineStore('dashboard', {
   actions: {
     async fetchQuotes() {
       try {
-        const response = await axios.get('https://api.quotable.io/random')
+        const response = await axios.get('http://api.quotable.io/random')
         this.quote = response.data.content
       } catch (error) {
         console.error('Failed to fetch grid data:', error);

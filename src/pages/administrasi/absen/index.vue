@@ -2,10 +2,8 @@
 import Swal from 'sweetalert2';
 import { useAbsenStore } from '@/stores/apps/administrasi/absen';
 import { computed, ref } from 'vue';
-import globalMixin from '@/mixins/globalMixin';
 
 const store = useAbsenStore();
-const { hasPermissions, hasRole } = globalMixin.methods;
 
 // State to track editable rows
 const editableRows = ref([]); // Array of ids for rows being edited
@@ -80,9 +78,6 @@ const loadItems = async ({ page, itemsPerPage, search }) => {
 // Check if a row is currently being edited
 const isRowEditable = (id) => editableRows.value.includes(id);
 
-const cekPermissionUpdate = () => hasPermissions('attendance-update') || hasRole('Developer') || hasRole('Administrator');
-const cekPermissionDelete = () => hasPermissions('attendance-delete') || hasRole('Developer') || hasRole('Administrator');
-
 </script>
 
 <template>
@@ -103,33 +98,33 @@ const cekPermissionDelete = () => hasPermissions('attendance-delete') || hasRole
     <!-- Row fields with editable state -->
     <template v-slot:item.statusIn="{ item }">
       <v-select label="Status masuk" :items="statusAbsen" v-model="item.statusIn" variant="outlined" density="compact"
-        class="mt-5" item-title="name" item-value="id" :disabled="!isRowEditable(item.id)" v-if="cekPermissionUpdate()"/>
+        class="mt-5" item-title="name" item-value="id" :disabled="!isRowEditable(item.id)" v-if="hasPermissions('perubahan-shift-update') || hasRole('Developer') || hasRole('Administrator')"/>
         <strong v-else>{{ item.statusIn }}</strong>
     </template>
     <template v-slot:item.timeIn="{ item }">
       <v-text-field label="Jam masuk" type="time" v-model="item.timeIn" variant="outlined" density="compact"
-        class="mt-5" :disabled="!isRowEditable(item.id)" v-if="cekPermissionUpdate()"/>
+        class="mt-5" :disabled="!isRowEditable(item.id)" v-if="hasPermissions('perubahan-shift-update') || hasRole('Developer') || hasRole('Administrator')"/>
         <strong v-else>{{ item.timeIn }}</strong>
     </template>
     <template v-slot:item.timeOut="{ item }">
       <v-text-field label="Jam pulang" type="time" v-model="item.timeOut" variant="outlined" density="compact"
-        class="mt-5" :disabled="!isRowEditable(item.id)" v-if="cekPermissionUpdate()"/>
+        class="mt-5" :disabled="!isRowEditable(item.id)" v-if="hasPermissions('perubahan-shift-update') || hasRole('Developer') || hasRole('Administrator')"/>
         <strong v-else>{{ item.timeOut }}</strong>
     </template>
     <template v-slot:item.statusOut="{ item }">
       <v-select label="Status pulang" :items="statusAbsen" v-model="item.statusOut" variant="outlined" density="compact"
-        class="mt-5" item-title="name" item-value="id" :disabled="!isRowEditable(item.id)" v-if="cekPermissionUpdate()"/>
+        class="mt-5" item-title="name" item-value="id" :disabled="!isRowEditable(item.id)" v-if="hasPermissions('perubahan-shift-update') || hasRole('Developer') || hasRole('Administrator')"/>
         <strong v-else>{{ item.statusOut }}</strong>
     </template>
 
     <!-- Action icons for edit and delete -->
     <template v-slot:item.actions="{ item }">
-      <v-icon v-if="!isRowEditable(item.id) && cekPermissionUpdate()" class="me-2" size="small" @click="handleEdit(item.id)" icon="mdi-pencil" />
+      <v-icon v-if="!isRowEditable(item.id) && hasPermissions('attendance-update') || hasRole('Developer') || hasRole('Administrator')" class="me-2" size="small" @click="handleEdit(item.id)" icon="mdi-pencil" />
       <v-icon v-if="isRowEditable(item.id)" class="me-2" size="small" color="primary" @click="handleSaveEdit(item)"
         icon="mdi-content-save" />
       <v-icon v-if="isRowEditable(item.id)" class="me-2" size="small" color="error" @click="handleEdit(item.id)"
         icon="mdi-close-circle" />
-      <v-icon class="me-2" size="small" @click="handleDelete(item.id)" icon="mdi-delete" v-if="cekPermissionDelete()"/>
+      <v-icon class="me-2" size="small" @click="handleDelete(item.id)" icon="mdi-delete" v-if="hasPermissions('attendance-delete') || hasRole('Developer') || hasRole('Administrator')"/>
     </template>
   </v-data-table-server>
 </template>
