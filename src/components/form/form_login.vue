@@ -64,7 +64,7 @@ const SubmitEvent = async () => {
 
       <v-card class="mb-12" color="primary" variant="tonal">
         <v-card-text class="text-medium-emphasis text-caption">
-          Peringatan: Setelah 3 kali gagal login berturut-turut, akun Anda akan dikunci sementara selama tiga jam.
+          Informasi, Jika kamu lupa password akun, kamu bisa menghubungi Tim HR untuk meminta reset password.
         </v-card-text>
       </v-card>
 
