@@ -79,9 +79,11 @@ const deleteItem = async (id) => {
       <v-text-field v-model="search" density="compact" variant="outlined" placeholder="Cari data..." class="mt-5" />
     </v-card-title>
     <v-divider></v-divider>
-    {{ search }}
     <v-data-table-server v-model:items-per-page="itemsPerPage" :headers="headers" :items="serverItems"
       :items-length="totalItems" :loading="loading" item-value="name" @update:options="fetchItems">
+      <template v-slot:item.gender="{ item }">
+        <v-icon :color="item.gender === 'm' ? 'primary' : 'error'">{{ item.gender === 'm' ? 'mdi-gender-male' : 'mdi-gender-female' }}</v-icon>
+      </template>
       <template v-slot:item.actions="{ item }">
         <v-icon class="me-2" size="small" @click="editItem(item.id)"
           v-if="hasPermissions('user-update') || hasRole('Developer') || hasRole('Administrator')">
