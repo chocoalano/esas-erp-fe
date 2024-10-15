@@ -8,6 +8,7 @@ export const useCompanyStore = defineStore('company', {
       name: '',
       latitude: '',
       longitude: '',
+      radius: '',
       fullAddress: '',
     },
     loading: false,
@@ -20,6 +21,7 @@ export const useCompanyStore = defineStore('company', {
         name: data.name,
         latitude: data.latitude,
         longitude: data.longitude,
+        radius: data.radius,
         fullAddress: data.fullAddress,
       }
     },

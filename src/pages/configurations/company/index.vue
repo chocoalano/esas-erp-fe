@@ -18,14 +18,17 @@
     <v-form @submit.prevent="handleSubmit" :disabled="formDisabled">
       <v-card-text>
         <v-row>
-          <v-col cols="12" md="4" sm="12">
+          <v-col cols="12" md="3" sm="12">
             <v-text-field label="Nama perusahaan" variant="outlined" density="compact" v-model="store.form.name" />
           </v-col>
-          <v-col cols="12" md="4" sm="12">
+          <v-col cols="12" md="3" sm="12">
             <v-text-field label="Latitude perusahaan" variant="outlined" density="compact" v-model="store.form.latitude" />
           </v-col>
-          <v-col cols="12" md="4" sm="12">
+          <v-col cols="12" md="3" sm="12">
             <v-text-field label="Longitude perusahaan" variant="outlined" density="compact" v-model="store.form.longitude" />
+          </v-col>
+          <v-col cols="12" md="3" sm="12">
+            <v-text-field label="Radius absensi" variant="outlined" density="compact" v-model="store.form.radius" />
           </v-col>
           <v-col cols="12" md="12" sm="12">
             <v-textarea label="Alamat perusahaan" variant="outlined" density="compact"
