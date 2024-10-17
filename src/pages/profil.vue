@@ -141,7 +141,6 @@
 </template>
 
 <script setup>
-import globalMixin from '@/mixins/globalMixin';
 import { ref, computed, defineComponent, h } from 'vue';
 import { useAuthStore } from '@/stores/apps/auth';
 import FormDatadiri from '@/components/form/FormDatadiri.vue';
@@ -152,8 +151,7 @@ import FormKontakDarurat from '@/components/form/FormKontak.vue';
 import FormFormal from '@/components/form/FormFormal.vue';
 import FormInformal from '@/components/form/FormInformal.vue';
 import FormPengalamanKerja from '@/components/form/FormPengalamanKerja.vue';
-
-const { baseFileUrl } = globalMixin.methods;
+import { baseFileUrl } from '@/utils/api';
 
 // State Management
 const store = useAuthStore();

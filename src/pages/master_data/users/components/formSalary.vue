@@ -1,11 +1,9 @@
 <script setup>
 import { useUsersStore } from '@/stores/apps/master-data/users';
-import globalMixin from '@/mixins/globalMixin';
 import { computed, ref } from 'vue';
 
 // Inisialisasi store
 const store = useUsersStore();
-const { errInput } = globalMixin.methods;
 const errors = computed(() => store.errors);
 
 const salaryOptions = ref({
@@ -24,10 +22,6 @@ const salaryOptions = ref({
     { id: 'time-live', name: 'Jam hidup' },
   ],
 });
-
-// Reusable error handling function
-const handleError = (field) => errInput(errors.value, `salary.${field}`);
-;
 </script>
 
 <template>
@@ -38,27 +32,27 @@ const handleError = (field) => errInput(errors.value, `salary.${field}`);
       <v-row>
         <v-col cols="12" md="6" sm="12">
           <v-text-field type="number" label="Gaji total" density="compact" variant="outlined"
-            v-model="store.form.salary.basicSalary" :error-messages="handleError('basic_salary')" />
+            v-model="store.form.salary.basicSalary" :error-messages="errInput(errors.value,'salary.basic_salary')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <SelectField label="Tipe gaji" :items="salaryOptions.salaryType" v-model="store.form.salary.salaryType"
-            :err="handleError('salary_type')" />
+            :err="errInput(errors.value,'salary.salary_type')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <SelectField label="Jadwal Pembayaran" :items="salaryOptions.scheduleType"
-            v-model="store.form.salary.paymentSchedule" :err="handleError('payment_schedule')" />
+            v-model="store.form.salary.paymentSchedule" :err="errInput(errors.value,'salary.payment_schedule')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-text-field type="number" label="Gaji prorate" density="compact" variant="outlined"
-            v-model="store.form.salary.prorateSettings" :error-messages="handleError('prorate_settings')" />
+            v-model="store.form.salary.prorateSettings" :error-messages="errInput(errors.value,'salary.prorate_settings')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <SelectField label="Pembayaran lembur" :items="salaryOptions.lemburType"
-            v-model="store.form.salary.overtimeSettings" :err="handleError('overtime_settings')" />
+            v-model="store.form.salary.overtimeSettings" :err="errInput(errors.value,'salary.overtime_settings')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-text-field label="Mata uang" density="compact" variant="outlined" v-model="store.form.salary.currency"
-            disabled :error-messages="handleError('currency')" />
+            disabled :error-messages="errInput(errors.value,'salary.currency')" />
         </v-col>
       </v-row>
     </v-card-text>

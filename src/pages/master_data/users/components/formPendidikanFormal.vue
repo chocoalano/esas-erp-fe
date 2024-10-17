@@ -1,14 +1,10 @@
 <script setup>
 import { computed } from 'vue';
 import { useUsersStore } from '@/stores/apps/master-data/users';
-import globalMixin from '@/mixins/globalMixin';
 
 const store = useUsersStore();
-const { errInput } = globalMixin.methods;
 const form = computed(() => store.form.formal_education);
 const errors = computed(() => store.errors);
-
-const handleError = (index, field) => errInput(errors.value, `formal_education.${index}.${field}`);
 </script>
 
 <template>
@@ -18,10 +14,6 @@ const handleError = (index, field) => errInput(errors.value, `formal_education.$
       <v-spacer></v-spacer>
       <v-btn color="primary" @click="store.addFE" variant="tonal" class="mr-5">Tambah</v-btn>
     </v-toolbar>
-
-    <v-card-title v-if="errInput(errors, 'formal_education').length > 0">
-      <Alert type="error" :msg="errInput(errors, 'formal_education')" />
-    </v-card-title>
 
     <v-table>
       <thead>
@@ -42,21 +34,21 @@ const handleError = (index, field) => errInput(errors.value, `formal_education.$
         <tr v-for="(state, index) in form" :key="index">
           <td>{{ index + 1 }}</td>
           <td><v-text-field v-model="state.grade_id" placeholder="Peringkat" density="compact" variant="outlined"
-              :error-messages="handleError(index, 'grade_id')" /></td>
+              :error-messages="errInput(errors.value, `formal_education.${index}.grade_id`)" /></td>
           <td><v-text-field v-model="state.institution" placeholder="Instansi" density="compact" variant="outlined"
-              :error-messages="handleError(index, 'institution')" /></td>
+              :error-messages="errInput(errors.value, `formal_education.${index}.institution`)" /></td>
           <td><v-text-field v-model="state.majors" placeholder="Jenjang" density="compact" variant="outlined"
-              :error-messages="handleError(index, 'majors')" /></td>
+              :error-messages="errInput(errors.value, `formal_education.${index}.majors`)" /></td>
           <td><v-text-field v-model="state.score" placeholder="Skor" density="compact" variant="outlined"
-              :error-messages="handleError(index, 'score')" /></td>
+              :error-messages="errInput(errors.value, `formal_education.${index}.score`)" /></td>
           <td><v-text-field v-model="state.start" placeholder="Dimulai" density="compact" variant="outlined"
-              :error-messages="handleError(index, 'start')" /></td>
+              :error-messages="errInput(errors.value, `formal_education.${index}.start`)" /></td>
           <td><v-text-field v-model="state.finish" placeholder="Berakhir" density="compact" variant="outlined"
-              :error-messages="handleError(index, 'finish')" /></td>
+              :error-messages="errInput(errors.value, `formal_education.${index}.finish`)" /></td>
           <td><v-text-field v-model="state.description" placeholder="Keterangan" density="compact" variant="outlined"
-              :error-messages="handleError(index, 'description')" /></td>
+              :error-messages="errInput(errors.value, `formal_education.${index}.description`)" /></td>
           <td><v-text-field v-model="state.certification" placeholder="Sertifikasi" density="compact" variant="outlined"
-              :error-messages="handleError(index, 'certification')" /></td>
+              :error-messages="errInput(errors.value, `formal_education.${index}.certification`)" /></td>
           <td>
             <v-icon size="large" @click="store.delFE(index)">mdi-delete</v-icon>
           </td>

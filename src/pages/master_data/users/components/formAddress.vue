@@ -1,10 +1,8 @@
 <script setup>
 import { useUsersStore } from '@/stores/apps/master-data/users';
 import { ref, computed } from 'vue';
-import globalMixin from '@/mixins/globalMixin';
 
 const store = useUsersStore();
-const { errInput } = globalMixin.methods;
 
 const errors = computed(() => store.errors);
 const { form } = store; // Destructure the form object for simpler access
@@ -13,9 +11,6 @@ const idOptions = ref([
   { id: 'ktp', name: 'KTP' },
   { id: 'passport', name: 'PASSPORT' }
 ]);
-
-// Reusable function for error handling
-const handleError = (field) => errInput(errors.value, `address.${field}`);
 </script>
 
 <template>
@@ -29,7 +24,7 @@ const handleError = (field) => errInput(errors.value, `address.${field}`);
             label="ID Tipe"
             :items="idOptions"
             v-model="form.address.idtype"
-            :error-messages="handleError('idtype')"
+            :error-messages="errInput(errors.value,'address.idtype')"
           />
         </v-col>
         <v-col cols="12" md="6" sm="12">
@@ -39,7 +34,7 @@ const handleError = (field) => errInput(errors.value, `address.${field}`);
             density="compact"
             variant="outlined"
             v-model="form.address.idnumber"
-            :error-messages="handleError('idnumber')"
+            :error-messages="errInput(errors.value,'address.idnumber')"
           />
         </v-col>
         <v-col cols="12" md="6" sm="12">
@@ -49,7 +44,7 @@ const handleError = (field) => errInput(errors.value, `address.${field}`);
             :label="`Permanen: ${form.address.ispermanent ? 'Ya' : 'Tidak'}`"
             hide-details
             inset
-            :error-messages="handleError('ispermanent')"
+            :error-messages="errInput(errors.value,'address.ispermanent')"
           />
         </v-col>
 
@@ -58,7 +53,7 @@ const handleError = (field) => errInput(errors.value, `address.${field}`);
           <DatePickerField
             label="ID Expired"
             v-model="form.address.idexpired"
-            :err="handleError('idexpired')"
+            :err="errInput(errors.value,'address.idexpired')"
           />
         </v-col>
 
@@ -69,7 +64,7 @@ const handleError = (field) => errInput(errors.value, `address.${field}`);
             density="compact"
             variant="outlined"
             v-model="form.address.postalcode"
-            :error-messages="handleError('postalcode')"
+            :error-messages="errInput(errors.value,'address.postalcode')"
           />
         </v-col>
 
@@ -78,7 +73,7 @@ const handleError = (field) => errInput(errors.value, `address.${field}`);
             label="Alamat Sekarang"
             variant="outlined"
             v-model="form.address.citizenIdAddress"
-            :error-messages="handleError('citizenIdAddress')"
+            :error-messages="errInput(errors.value,'address.citizenIdAddress')"
           />
         </v-col>
 
@@ -89,7 +84,7 @@ const handleError = (field) => errInput(errors.value, `address.${field}`);
             :label="`Gunakan alamat sekarang untuk alamat tinggal: ${form.address.useAsResidential}`"
             hide-details
             inset
-            :error-messages="handleError('useAsResidential')"
+            :error-messages="errInput(errors.value,'address.useAsResidential')"
           />
         </v-col>
 
@@ -98,7 +93,7 @@ const handleError = (field) => errInput(errors.value, `address.${field}`);
             label="Alamat Tinggal"
             variant="outlined"
             v-model="form.address.residentialAddress"
-            :error-messages="handleError('residentialAddress')"
+            :error-messages="errInput(errors.value,'address.residentialAddress')"
           />
         </v-col>
       </v-row>

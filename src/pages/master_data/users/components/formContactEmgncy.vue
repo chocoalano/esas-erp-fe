@@ -1,10 +1,8 @@
 <script setup>
 import { computed } from 'vue';
 import { useUsersStore } from '@/stores/apps/master-data/users';
-import globalMixin from '@/mixins/globalMixin';
 
 const store = useUsersStore();
-const { errInput } = globalMixin.methods;
 
 const form = computed(() => store.form.emergency_contacts);
 const errors = computed(() => store.errors);
@@ -18,8 +16,6 @@ const hubungan = [
   { id: 'sister', name: 'Saudara perempuan' },
   { id: 'child', name: 'Anak' },
 ];
-
-const handleError = (index, field) => errInput(errors.value, `emergency_contacts.${index}.${field}`);
 </script>
 
 <template>
@@ -29,10 +25,6 @@ const handleError = (index, field) => errInput(errors.value, `emergency_contacts
       <v-spacer></v-spacer>
       <v-btn color="primary" @click="store.addEC" variant="tonal" class="mr-5">Tambah</v-btn>
     </v-toolbar>
-
-    <v-card-title v-if="errInput(errors, 'emergency_contacts').length > 0">
-      <Alert type="error" :msg="errInput(errors, 'emergency_contacts')" />
-    </v-card-title>
 
     <v-table>
       <thead>
@@ -50,19 +42,19 @@ const handleError = (index, field) => errInput(errors.value, `emergency_contacts
           <td>{{ index + 1 }}</td>
           <td>
             <v-text-field v-model="contact.name" placeholder="Nama" density="compact" variant="outlined"
-              :error-messages="handleError(index, 'name')" />
+              :error-messages="errInput(errors.value, `emergency_contacts.${index}.name`)" />
           </td>
           <td>
             <SelectField label="Hubungan" :items="hubungan" v-model="contact.relationship"
-              :err="handleError(index, 'relationship')" />
+              :err="errInput(errors.value, `emergency_contacts.${index}.relationship`)" />
           </td>
           <td>
             <v-text-field v-model="contact.phone" placeholder="Telpon/HP" density="compact" variant="outlined"
-              :error-messages="handleError(index, 'phone')" />
+              :error-messages="errInput(errors.value, `emergency_contacts.${index}.phone`)" />
           </td>
           <td>
             <v-text-field v-model="contact.profession" placeholder="Profesi" density="compact" variant="outlined"
-              :error-messages="handleError(index, 'profession')" />
+              :error-messages="errInput(errors.value, `emergency_contacts.${index}.profession`)" />
           </td>
           <td>
             <v-icon size="large" @click="store.delEC(index)">mdi-delete</v-icon>

@@ -1,10 +1,7 @@
 <script setup>
-import globalMixin from '@/mixins/globalMixin';
+import { baseFileUrl } from '@/utils/api';
 import { useUsersStore } from '@/stores/apps/master-data/users';
 import { ref, computed } from 'vue';
-
-// Ambil method handleError dari globalMixin
-const { errInput, hasPermissions, hasRole, baseFileUrl } = globalMixin.methods;
 
 // Inisialisasi store
 const store = useUsersStore();
@@ -40,9 +37,6 @@ const agama = ref([
   { id: 'buddha', name: 'Buddha' },
   { id: 'khonghucu', name: 'Khonghucu' },
 ]);
-
-// Fungsi untuk menangani error input
-const handleError = (field) => errInput(errors.value, `user.${field}`);
 </script>
 
 <template>
@@ -55,51 +49,51 @@ const handleError = (field) => errInput(errors.value, `user.${field}`);
       <v-row>
         <v-col cols="12" md="6" sm="12">
           <v-text-field label="Nama" variant="outlined" density="compact" v-model="store.form.user.name"
-            :error-messages="handleError('name')" />
+            :error-messages="errInput(errors.value,'user.name')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-text-field label="NIK" variant="outlined" density="compact" v-model="store.form.user.nik"
-            :error-messages="handleError('nik')" />
+            :error-messages="errInput(errors.value,'user.nik')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-text-field label="Email" variant="outlined" density="compact" v-model="store.form.user.email"
-            :error-messages="handleError('email')" />
+            :error-messages="errInput(errors.value,'user.email')" />
         </v-col>
         <v-col cols="12" md="6" sm="12"
           v-if="hasPermissions('user-create') || hasRole('Developer') || hasRole('Administrator')">
           <SelectField label="Roles" :items="roleOptions" v-model="store.form.user.role" multiple
-            :error-messages="handleError('role')" />
+            :error-messages="errInput(errors.value,'user.role')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-text-field label="Telpon/HP" variant="outlined" density="compact" v-model="store.form.user.phone"
-            :error-messages="handleError('phone')" />
+            :error-messages="errInput(errors.value,'user.phone')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-text-field label="Tempat lahir" variant="outlined" density="compact" v-model="store.form.user.placebirth"
-            :error-messages="handleError('placebirth')" />
+            :error-messages="errInput(errors.value,'user.placebirth')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
-          <DatePickerField label="Tanggal lahir" v-model="store.form.user.datebirth" :err="handleError('datebirth')" />
+          <DatePickerField label="Tanggal lahir" v-model="store.form.user.datebirth" :err="errInput(errors.value,'user.datebirth')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <SelectField label="Jenis Kelamin" :items="jenis_kelamin" v-model="store.form.user.gender"
-            :error-messages="handleError('gender')" />
+            :error-messages="errInput(errors.value,'user.gender')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <SelectField label="Gol Darah" :items="gol_darah" v-model="store.form.user.blood"
-            :error-messages="handleError('blood')" />
+            :error-messages="errInput(errors.value,'user.blood')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <SelectField label="Status Pernikahan" :items="status_pernikahan" v-model="store.form.user.maritalStatus"
-            :error-messages="handleError('maritalStatus')" />
+            :error-messages="errInput(errors.value,'user.maritalStatus')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <SelectField label="Agama" :items="agama" v-model="store.form.user.religion"
-            :error-messages="handleError('religion')" />
+            :error-messages="errInput(errors.value,'user.religion')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-file-input variant="outlined" density="compact" label="Foto" v-model="store.form.user.image"
-            :error-messages="handleError('image')"></v-file-input>
+            :error-messages="errInput(errors.value,'user.image')"></v-file-input>
         </v-col>
       </v-row>
     </v-card-text>
