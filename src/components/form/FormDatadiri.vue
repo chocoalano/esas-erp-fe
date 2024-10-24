@@ -39,17 +39,17 @@ const agama = ref([
 
 const submitDataDiri = () => {
   const formData = new FormData();
-  formData.append('users[name]', form.value.name);
-  formData.append('users[nik]', form.value.nik);
-  formData.append('users[email]', form.value.email);
-  formData.append('users[phone]', form.value.phone);
-  formData.append('users[placebirth]', form.value.placebirth);
-  formData.append('users[datebirth]', form.value.datebirth);
-  formData.append('users[gender]', form.value.gender);
-  formData.append('users[blood]', form.value.blood);
-  formData.append('users[maritalStatus]', form.value.maritalStatus);
-  formData.append('users[religion]', form.value.religion);
-  formData.append('users[image]', form.value.image);
+  formData.append('user[name]', form.value.name);
+  formData.append('user[nik]', form.value.nik);
+  formData.append('user[email]', form.value.email);
+  formData.append('user[phone]', form.value.phone);
+  formData.append('user[placebirth]', form.value.placebirth);
+  formData.append('user[datebirth]', form.value.datebirth);
+  formData.append('user[gender]', form.value.gender);
+  formData.append('user[blood]', form.value.blood);
+  formData.append('user[maritalStatus]', form.value.maritalStatus);
+  formData.append('user[religion]', form.value.religion);
+  formData.append('user[image]', form.value.image);
   store.submitProfile(formData)
 }
 </script>
