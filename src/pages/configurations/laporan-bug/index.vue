@@ -3,7 +3,6 @@ import Swal from 'sweetalert2';
 import { useLaporanBugStore } from '@/stores/apps/configs/laporan_bug';
 import { computed, ref } from 'vue';
 import DialogForm from './dialogForm.vue';
-import { baseFileUrl } from "@/utils/api";
 
 // Store initialization
 const store = useLaporanBugStore();
@@ -93,7 +92,7 @@ const handleDelete = (id) => {
     <!-- pictureProof -->
     <template v-slot:item.pictureProof="{ item }">
       <v-img :width="100" aspect-ratio="16/9" cover
-        :src="`${baseFileUrl()}/${item.pictureProof}`"></v-img>
+        :src="item.pictureProof"></v-img>
     </template>
     <!-- repairStatus -->
     <template v-slot:item.repairStatus="{ item }">

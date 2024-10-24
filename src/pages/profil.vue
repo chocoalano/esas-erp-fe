@@ -5,7 +5,7 @@
         <!-- Avatar Section -->
         <div class="d-flex justify-center mb-4">
           <v-avatar color="surface" size="100">
-            <v-img :alt="user.name" :src="`${baseFileUrl()}/${user.image}`" />
+            <v-img :alt="user.name" :src="user.image" />
           </v-avatar>
         </div>
         <!-- User Information Section -->
@@ -151,8 +151,6 @@ import FormKontakDarurat from '@/components/form/FormKontak.vue';
 import FormFormal from '@/components/form/FormFormal.vue';
 import FormInformal from '@/components/form/FormInformal.vue';
 import FormPengalamanKerja from '@/components/form/FormPengalamanKerja.vue';
-import { baseFileUrl } from '@/utils/api';
-
 // State Management
 const store = useAuthStore();
 const user = computed(() => store.user);

@@ -3,7 +3,6 @@ import { useAppStore } from '@/stores/app'
 import { useAuthStore } from '@/stores/apps/auth';
 import { useRouter } from 'vue-router';
 import { onMounted, getCurrentInstance, onBeforeUnmount, ref } from 'vue'
-import { baseFileUrl } from '@/utils/api';
 import { showNotification } from '@/plugins/notification'
 import esaslogo from '@/assets/logo_esas_putih.svg';
 import notifikasiTone from '@/assets/sound/notifikasi.mp3'
@@ -97,7 +96,7 @@ const signOut = () => {
           <v-infinite-scroll height="400" @load="load" mode="manual" v-if="list.length > 0">
             <v-list lines="three" item-props>
               <v-list-item v-for="item in list" :key="item.id"
-                :prepend-avatar="`${baseFileUrl()}/${item.fromUser.image}`">
+                :prepend-avatar="item.fromUser.image">
                 <v-list-item-title>{{ item.title }}</v-list-item-title>
                 <v-list-item-subtitle>
                   <div>NIP : {{ item.fromUser.nik }}</div>

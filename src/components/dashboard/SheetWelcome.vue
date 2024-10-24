@@ -2,7 +2,6 @@
 import { useDashboardStore } from '@/stores/dashboard';
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/apps/auth';
-import { baseFileUrl } from "@/utils/api";
 
 const store = useDashboardStore();
 const storeAuth = useAuthStore();
@@ -58,7 +57,7 @@ const ucapanSelamat = () => {
       <v-row>
         <v-col cols="12" md="3">
           <v-card flat>
-            <v-img height="200" :lazy-src="`${baseFileUrl()}/${storeAuth.user.image}`" :src="`${baseFileUrl()}/${storeAuth.user.image}`" cover />
+            <v-img height="200" :lazy-src="storeAuth.user.image" :src="storeAuth.user.image" cover />
           </v-card>
         </v-col>
 

@@ -1,5 +1,4 @@
 <script setup>
-import { baseFileUrl } from '@/utils/api';
 import { useUsersStore } from '@/stores/apps/master-data/users';
 import { ref, computed } from 'vue';
 
@@ -98,8 +97,8 @@ const agama = ref([
       </v-row>
     </v-card-text>
     <v-card-actions v-if="avatar !== ''">
-      <v-img class="mx-auto" height="300" :lazy-src="`${baseFileUrl()}/${avatar}`" max-width="500"
-        :src="`${baseFileUrl()}/${avatar}`">
+      <v-img class="mx-auto" height="300" :lazy-src="avatar" max-width="500"
+        :src="avatar">
         <template v-slot:placeholder>
           <div class="d-flex align-center justify-center fill-height">
             <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>

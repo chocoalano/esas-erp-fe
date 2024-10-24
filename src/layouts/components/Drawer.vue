@@ -3,7 +3,6 @@ import { ref } from "vue";
 import { useAppStore } from '@/stores/app';
 import { useAuthStore } from '@/stores/apps/auth';
 import { useRouter } from 'vue-router';
-import { baseFileUrl } from '@/utils/api';
 
 const store = useAppStore();
 const auth = useAuthStore();
@@ -50,7 +49,7 @@ const movePage = (link) => {
   <v-navigation-drawer v-model="store.isDrawer" :location="$vuetify.display.mobile ? 'bottom' : undefined"
     style="position: fixed !important;" flat>
     <v-list>
-      <v-list-item :prepend-avatar="`${baseFileUrl()}/${auth.user.image}`" :subtitle="drawerSubtitle()"
+      <v-list-item :prepend-avatar="auth.user.image" :subtitle="drawerSubtitle()"
         :title="auth.user.name">
         <template v-slot:append>
           <v-btn icon="mdi-menu-down" size="small" variant="text" id="menu-account"></v-btn>

@@ -2,7 +2,6 @@
 import { useRouter } from 'vue-router';
 import { useAppStore } from '@/stores/app';
 import { useDashboardStore } from '@/stores/dashboard';
-import { baseFileUrl } from '@/utils/api'
 import { onMounted } from 'vue';
 const app = useAppStore()
 const store = useDashboardStore()
@@ -34,7 +33,7 @@ const handleClick = () => {
           <div>
             <v-list>
               <v-list-item
-                :prepend-avatar="item.user.image ? `${baseFileUrl()}/${item.user.image}` : 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'"
+                :prepend-avatar="item.user.image ? item.user.image : 'https://res.cloudinary.com/dqta7pszj/image/upload/v1729758845/berbeb288f06nidttbgq.png'"
                 :subtitle="item.user.nik" :title="item.user.name">
                 <div class="d-flex justify-space-between">
                   <div class="text-sm font-weight-bold">{{ item.date }}</div>

@@ -1,6 +1,5 @@
 <script setup>
 import { useDashboardStore } from '@/stores/dashboard';
-import { baseFileUrl } from '@/utils/api';
 import avatar from '@/assets/avatar.png'
 
 const store = useDashboardStore();
@@ -33,7 +32,7 @@ const stringLimiter = (str, limit, suffix = '...') => {
                 <template v-slot:prepend>
                   <v-avatar size="50">
                     <v-img :alt="item.raw.name"
-                      :src="item.raw.image ? `${baseFileUrl()}/${item.raw.image}` : avatar"></v-img>
+                      :src="item.raw.image ? item.raw.image : avatar"></v-img>
                   </v-avatar>
                 </template>
                 <v-card-text>
