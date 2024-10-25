@@ -95,7 +95,7 @@ export const useUsersStore = defineStore('users', {
     async kelengkapan_form_user() {
       this.loading = true;
       try {
-        const response = await api.get(`/users-kelengkapan-form`);
+        const response = await api.get(`/web/users-kelengkapan-form`);
         const { role, company, branch, departemen, jabatan, level, approval } = response.data;
         Object.assign(this, { roleOptions: role, company, branch, departemen, jabatan, level, approval });
       } catch (error) {
