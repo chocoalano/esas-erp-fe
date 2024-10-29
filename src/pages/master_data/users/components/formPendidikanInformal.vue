@@ -12,6 +12,13 @@ const jenis = ref([
   { id: 'month', name: 'Bulan' },
   { id: 'year', name: 'Tahun' },
 ])
+const validate = (key)=>{
+  if (errors.value.length > 0) {
+    const error = errors.value.find(error => error.field === key);
+    return error ? error.message : ''
+  }
+  return ''
+}
 </script>
 
 <template>
@@ -42,31 +49,31 @@ const jenis = ref([
         <tr v-for="(state, index) in form" :key="index">
           <td>{{ index + 1 }}</td>
           <td><v-text-field v-model="state.name" placeholder="Instansi" density="compact" variant="outlined"
-              :error-messages="errInput(errors.value, `informal_education.${index}.name`)" />
+              :error-messages="validate(`informal_education.${index}.name`)" />
           </td>
           <td>
-            <DatePickerField label="Tgl. Mulai" v-model="state.start" :err="errInput(errors.value, `informal_education.${index}.start`)" />
+            <DatePickerField label="Tgl. Mulai" v-model="state.start" :err="validate(`informal_education.${index}.start`)" />
           </td>
           <td>
-            <DatePickerField label="Tgl. Selesai" v-model="state.finish" :err="errInput(errors.value, `informal_education.${index}.finish`)" />
+            <DatePickerField label="Tgl. Selesai" v-model="state.finish" :err="validate(`informal_education.${index}.finish`)" />
           </td>
           <td>
-            <DatePickerField label="Masa Berlaku" v-model="state.expired" :err="errInput(errors.value, `informal_education.${index}.expired`)" />
+            <DatePickerField label="Masa Berlaku" v-model="state.expired" :err="validate(`informal_education.${index}.expired`)" />
           </td>
           <td>
-            <SelectField label="Jenis" :items="jenis" v-model="state.type" :err="errInput(errors.value, `informal_education.${index}.type`)" />
+            <SelectField label="Jenis" :items="jenis" v-model="state.type" :err="validate(`informal_education.${index}.type`)" />
           </td>
           <td><v-text-field type="number" v-model="state.duration" placeholder="Durasi" density="compact"
-              variant="outlined" :error-messages="errInput(errors.value, `informal_education.${index}.duration`)" />
+              variant="outlined" :error-messages="validate(`informal_education.${index}.duration`)" />
           </td>
           <td><v-text-field type="number" v-model="state.fee" placeholder="Biaya" density="compact" variant="outlined"
-              :error-messages="errInput(errors.value, `informal_education.${index}.fee`)" />
+              :error-messages="validate(`informal_education.${index}.fee`)" />
           </td>
           <td><v-text-field v-model="state.description" placeholder="Keterangan" density="compact" variant="outlined"
-              :error-messages="errInput(errors.value, `informal_education.${index}.description`)" />
+              :error-messages="validate(`informal_education.${index}.description`)" />
           </td>
           <td>
-            <Switch label="" v-model="state.certification" :err="errInput(errors.value, `informal_education.${index}.certification`)" />
+            <Switch label="" v-model="state.certification" :err="validate(`informal_education.${index}.certification`)" />
           </td>
           <td>
             <v-icon class="me-2" size="large" @click="store.delIFE(index)">

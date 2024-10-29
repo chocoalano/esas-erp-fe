@@ -48,8 +48,8 @@ export const useUsersStore = defineStore('users', {
 
       emergency_contacts: [{ name: '', relationship: '', phone: '', profession: '' }],
       family: [{ fullname: '', relationship: '', birthdate: '', marital_status: '', job: '' }],
-      formal_education: [{ grade_id: '', institution: '', majors: '', score: '', start: formatDate(), finish: formatDate(), description: '', certification: '' }],
-      informal_education: [{ name: '', start: formatDate(), finish: formatDate(), expired: formatDate(), type: '', duration: '', fee: '', description: '', certification: '' }],
+      formal_education: [{ institution: '', majors: '', score: '', start: formatDate(), finish: formatDate(), description: '', certification: false }],
+      informal_education: [{ name: '', start: formatDate(), finish: formatDate(), expired: formatDate(), type: '', duration: '', fee: '', description: '', certification: false }],
       work_experience: [{ company: '', position: '', from: formatDate(), to: formatDate(), length_of_service: '' }],
     },
     roleOptions: [],
@@ -74,7 +74,7 @@ export const useUsersStore = defineStore('users', {
     delEC(index) { this.delItemFromArray('emergency_contacts', index); },
     addFamily() { this.addItemToArray('family', { fullname: '', relationship: '', birthdate: '', marital_status: '', job: '' }); },
     delFamily(index) { this.delItemFromArray('family', index); },
-    addFE() { this.addItemToArray('formal_education', { grade_id: '', institution: '', majors: '', score: '', start: '', finish: '', description: '', certification: '' }); },
+    addFE() { this.addItemToArray('formal_education', { institution: '', majors: '', score: '', start: '', finish: '', description: '', certification: '' }); },
     delFE(index) { this.delItemFromArray('formal_education', index); },
     addIFE() { this.addItemToArray('informal_education', { name: '', start: '', finish: '', expired: '', type: '', duration: '', fee: '', description: '', certification: '' }); },
     delIFE(index) { this.delItemFromArray('informal_education', index); },
@@ -110,8 +110,39 @@ export const useUsersStore = defineStore('users', {
       try {
         const { data } = await api.get(`/web/users/${id}/edit`);
         this.assignFormData(data);
+      } catch (error) {
+        console.error('Failed to fetch user form data:', error);
       } finally {
         this.loading = false;
+      }
+    },
+
+    async postImport(dataimport){
+      this.actLoading = true;
+      try {
+        const { data } = await api.post('/web/users/import', dataimport)
+        Swal.fire({
+          title: "Berhasil!",
+          text: "Data berhasil disimpan",
+          icon: "success",
+          confirmButtonText: "Tutup",
+          customClass: {
+            confirmButton: 'sweet-confirm-button-class',
+          }
+        });
+      } catch (error) {
+        console.error(error.response.data)
+        Swal.fire({
+          title: "Error!",
+          text: `Error, data gagal disimpan: ${error.response.data}, perhatikan file import anda! kami tidak menerima data import yang masih belum lengkap!`,
+          icon: "error",
+          confirmButtonText: "Tutup",
+          customClass: {
+            confirmButton: 'sweet-confirm-button-class',
+          }
+        });
+      }finally{
+        this.actLoading = false;
       }
     },
 
@@ -255,7 +286,21 @@ export const useUsersStore = defineStore('users', {
       this.form.emergency_contacts = emergencyContact;
       this.form.family = family;
       this.form.formal_education = formalEducation;
-      this.form.informal_education = informalEducation;
+      const ife = []
+      for (const item in informalEducation) {
+        ife.push({ 
+          name: item,name, 
+          start: formatDate(item.start), 
+          finish: formatDate(item.finish), 
+          expired: formatDate(item.expired), 
+          type: item.type ?? '', 
+          duration: item.duration ?? '', 
+          fee: item.fee ?? '', 
+          description: item.description ?? '', 
+          certification: item.certification > 0 ? true : false 
+        })
+      }
+      this.form.informal_education = ife;
       this.form.work_experience = workExperience;
     }
   }

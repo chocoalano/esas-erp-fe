@@ -1,5 +1,6 @@
 <script setup>
 import Swal from 'sweetalert2'
+import dialog_expinp from './dialog_expinp.vue'
 import { useUsersStore } from '@/stores/apps/master-data/users'
 import { useUsersTables } from './composables/useUsersTables'
 import { useRouter } from 'vue-router'
@@ -76,6 +77,7 @@ const deleteItem = async (id) => {
         <v-icon>mdi-pen-plus</v-icon> tambah data
       </v-btn>
       <v-spacer></v-spacer>
+      <dialog_expinp />
       <v-text-field v-model="search" density="compact" variant="outlined" placeholder="Cari data..." class="mt-5" />
     </v-card-title>
     <v-divider></v-divider>

@@ -3,6 +3,13 @@ import { useUsersStore } from '@/stores/apps/master-data/users';
 const store = useUsersStore();
 const form = computed(() => store.form.work_experience)
 const errors = computed(() => store.errors)
+const validate = (key)=>{
+  // if (errors.value.length > 0) {
+  //   const error = errors.value.find(error => error.field === key);
+  //   return error ? error.message : ''
+  // }
+  // return ''
+}
 </script>
 
 <template>
@@ -27,21 +34,21 @@ const errors = computed(() => store.errors)
       <tbody>
         <tr v-for="(state, index) in form" :key="index">
           <td>{{ index + 1 }}</td>
-          <td><v-text-field v-model="state.name" placeholder="Instansi" density="compact" variant="outlined"
-              :error-messages="errInput(errors.value, `work_experience.${index}.name`)" />
+          <td><v-text-field v-model="state.company" placeholder="Instansi" density="compact" variant="outlined"
+              :error-messages="validate(`work_experience.${index}.company`)" />
           </td>
           <td>
-            <DatePickerField label="Tgl. Mulai" v-model="state.start" :err="errInput(errors.value, `work_experience.${index}.start`)" />
+            <DatePickerField label="Tgl. Mulai" v-model="state.start" :err="validate(`work_experience.${index}.start`)" />
           </td>
           <td>
-            <DatePickerField label="Tgl. Selesai" v-model="state.finish" :err="errInput(errors.value, `work_experience.${index}.finish`)" />
+            <DatePickerField label="Tgl. Selesai" v-model="state.finish" :err="validate(`work_experience.${index}.finish`)" />
           </td>
           <td>
-            <DatePickerField label="Masa Berlaku" v-model="state.expired" :err="errInput(errors.value, `work_experience.${index}.expired`)" />
+            <DatePickerField label="Masa Berlaku" v-model="state.expired" :err="validate(`work_experience.${index}.expired`)" />
           </td>
           <td>
             <v-text-field v-model="state.type" placeholder="Jenis" density="compact" variant="outlined"
-              :error-messages="errInput(errors.value, `work_experience.${index}.type`)" />
+              :error-messages="validate(`work_experience.${index}.type`)" />
           </td>
           <td>
             <v-icon class="me-2" size="large" @click="store.delWE(index)">
