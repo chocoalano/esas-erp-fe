@@ -13,11 +13,11 @@ const selectedTab = ref(0);
 
 // Computed property to check if any sheet contains incomplete data
 const isSaveDisabled = computed(() => {
-    // return Object.values(jsonData.value).some(sheetData => 
-    //     sheetData.some(row => 
-    //         Object.values(row).some(cell => cell === null || cell === undefined || cell === '')
-    //     )
-    // );
+    return Object.values(jsonData.value).some(sheetData => 
+        sheetData.some(row => 
+            Object.values(row).some(cell => cell === null || cell === undefined || cell === '')
+        )
+    );
     return false
 });
 
