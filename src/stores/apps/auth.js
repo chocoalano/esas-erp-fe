@@ -60,10 +60,11 @@ export const useAuthStore = defineStore('auth', {
     async login(userData) {
       try {
         const response = await api.post('/login', userData);
-        const { token } = response.data;
+        const { token, abilities } = response.data;
 
         this.token = token;
         localStorage.setItem('token', token);
+        this.permission = abilities
         await this.profile()
       } catch (error) {
         this.showAlert(error.status, error.message)
@@ -83,12 +84,15 @@ export const useAuthStore = defineStore('auth', {
         const response = await api.get('/user-auth');
         const { account, role, permission } = response.data;
         this.user = account
-        await this.assignFormData(account)
         await this.assignPermissionAndRole(permission, role)
+        await this.assignFormData(account)
       } catch (error) {
-        this.showAlert(error.status, error.message)
-        this.removeCredential();
-        window.location.reload()
+        console.error(error);
+        if (error.status === 401) {
+          this.showAlert(error.status, error.message)
+          this.removeCredential();
+          window.location.reload()
+        }
       }
     },
     async assignPermissionAndRole(newPermissions, newRole) {
@@ -166,21 +170,25 @@ export const useAuthStore = defineStore('auth', {
         maritalStatus,
         religion,
       });
-      this.form.address = {
-        idtype: address.idtype || 'ktp',
-        idnumber: address.idnumber || '',
-        idexpired: address.idexpired || formatDate(),
-        ispermanent: address.ispermanent ?? false,
-        postalcode: address.postalcode || '',
-        citizenIdAddress: address.citizenIdAddress || '',
-        useAsResidential: address.useAsResidential ?? false,
-        residentialAddress: address.residentialAddress || ''
-      };
-      this.form.bank = {
-        bankName: bank.bankName || '',
-        bankAccount: bank.bankAccount || '',
-        bankAccountHolder: bank.bankAccountHolder || ''
-      };
+      if (address) {
+        this.form.address = {
+          idtype: address.idtype ?? 'ktp',
+          idnumber: address.idnumber ?? '',
+          idexpired: address.idexpired ?? formatDate(),
+          ispermanent: address.ispermanent ?? false,
+          postalcode: address.postalcode ?? '',
+          citizenIdAddress: address.citizenIdAddress ?? '',
+          useAsResidential: address.useAsResidential ?? false,
+          residentialAddress: address.residentialAddress ?? ''
+        };
+      }
+      if (bank) {
+        this.form.bank = {
+          bankName: bank.bankName || '',
+          bankAccount: bank.bankAccount || '',
+          bankAccountHolder: bank.bankAccountHolder || ''
+        };
+      }
       this.form.emergency_contacts = emergencyContact || [];
       this.form.family = family || [];
       this.form.formal_education = formalEducation.map(el => ({

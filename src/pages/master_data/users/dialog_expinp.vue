@@ -13,11 +13,12 @@ const selectedTab = ref(0);
 
 // Computed property to check if any sheet contains incomplete data
 const isSaveDisabled = computed(() => {
-    return Object.values(jsonData.value).some(sheetData => 
-        sheetData.some(row => 
-            Object.values(row).some(cell => cell === null || cell === undefined || cell === '')
-        )
-    );
+    // return Object.values(jsonData.value).some(sheetData => 
+    //     sheetData.some(row => 
+    //         Object.values(row).some(cell => cell === null || cell === undefined || cell === '')
+    //     )
+    // );
+    return false
 });
 
 const extractFromExcel = () => {
@@ -32,19 +33,15 @@ const extractFromExcel = () => {
     reader.onload = (event) => {
         const data = new Uint8Array(event.target.result);
         const workbook = XLSX.read(data, { type: 'array' });
-
         // Clear previous data and reset jsonData
         jsonData.value = {};
-
         workbook.SheetNames.forEach(sheetName => {
             const worksheet = workbook.Sheets[sheetName];
             const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
             if (rows.length < 2) {
                 console.warn(`Sheet "${sheetName}" does not contain enough data.`);
                 return;
             }
-
             const keys = rows[0];
             const sheetData = rows.slice(1)
                 .filter(row => row.some(cell => cell !== null && cell !== undefined))
@@ -52,13 +49,10 @@ const extractFromExcel = () => {
                     acc[key] = row[index] !== undefined ? row[index] : null;
                     return acc;
                 }, {}));
-
             jsonData.value[sheetName] = sheetData;
         });
-
         selectedTab.value = 0;
     };
-
     reader.readAsArrayBuffer(file);
 };
 

@@ -8,10 +8,11 @@ import { useAuthStore } from '@/stores/apps/auth';
 
 // Inisialisasi store
 const { permission, profile } = useAuthStore();
+const permission_data = computed(() => permission);
 
 // Fetch profile jika permission null
 onMounted(async () => {
-  if (!permission) {
+  if (permission_data.value.length < 1) {
     await profile();
   }
 });

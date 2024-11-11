@@ -33,7 +33,6 @@ api.interceptors.response.use(
     if (error.response.status === 401) {
       authStore.removeCredential();
     }
-    
     return Promise.reject(error);
   }
 );
