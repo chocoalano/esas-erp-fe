@@ -29,12 +29,12 @@ const status_pernikahan = ref([
 ]);
 
 const agama = ref([
-  { id: 'islam', name: 'Islam' },
-  { id: 'protestant', name: 'Protestant' },
-  { id: 'catholic', name: 'Catholic' },
-  { id: 'hindu', name: 'Hindu' },
-  { id: 'buddha', name: 'Buddha' },
-  { id: 'khonghucu', name: 'Khonghucu' },
+  { id: 'ISLAM', name: 'Islam' },
+  { id: 'PROTESTAN', name: 'Protestant' },
+  { id: 'KHATOLIK', name: 'Catholic' },
+  { id: 'HINDU', name: 'Hindu' },
+  { id: 'BUDHA', name: 'Buddha' },
+  { id: 'KHONGHUCU', name: 'Khonghucu' },
 ]);
 </script>
 
@@ -62,6 +62,10 @@ const agama = ref([
           v-if="hasPermissions('user-create') || hasRole('Developer') || hasRole('Administrator')">
           <SelectField label="Roles" :items="roleOptions" v-model="store.form.user.role" multiple
             :error-messages="errInput(errors.value,'user.role')" />
+        </v-col>
+        <v-col cols="12" md="6" sm="12">
+          <v-text-field label="Password" variant="outlined" density="compact" v-model="store.form.user.password"
+            :error-messages="errInput(errors.value,'user.password')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-text-field label="Telpon/HP" variant="outlined" density="compact" v-model="store.form.user.phone"

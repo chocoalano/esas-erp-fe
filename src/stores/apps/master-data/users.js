@@ -131,7 +131,7 @@ export const useUsersStore = defineStore('users', {
           }
         });
       } catch (error) {
-        console.error(error.response.data)
+        console.error(error)
         Swal.fire({
           title: "Error!",
           text: `Error, data gagal disimpan: ${error.response.data}, perhatikan file import anda! kami tidak menerima data import yang masih belum lengkap!`,
