@@ -1,6 +1,9 @@
 <script setup>
 import { useUsersStore } from '@/stores/apps/master-data/users';
 import { computed, ref } from 'vue';
+import DatePickerField from "@/components/form-input/DatePickerField.vue";
+import SelectField from "@/components/form-input/SelectField.vue";
+import Switch from "@/components/form-input/Switch.vue";
 
 const store = useUsersStore();
 

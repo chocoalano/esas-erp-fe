@@ -1,6 +1,8 @@
 <script setup>
 import { computed } from 'vue';
 import { useUsersStore } from '@/stores/apps/master-data/users';
+import SelectField from '@/components/form-input/SelectField.vue';
+import DatePickerField from '@/components/form-input/DatePickerField.vue';
 
 const store = useUsersStore();
 const form = computed(() => store.form.family);
@@ -21,6 +23,13 @@ const status_pernikahan = [
   { id: 'widow', name: 'Janda' },
   { id: 'widower', name: 'Duda' },
 ];
+const validate = (key)=>{
+  if (errors.value.length > 0) {
+    const error = errors.value.find(error => error.field === key);
+    return error ? error.message : ''
+  }
+  return ''
+}
 </script>
 
 <template>
@@ -48,23 +57,23 @@ const status_pernikahan = [
           <td>{{ index + 1 }}</td>
           <td>
             <v-text-field v-model="family.fullname" placeholder="Nama" density="compact" variant="outlined"
-              :error-messages="errInput(errors.value, `family.${index}.fullname`)" />
+              :error-messages="validate(`family.${index}.fullname`)" />
           </td>
           <td>
             <SelectField label="Hubungan" :items="hubungan" v-model="family.relationship"
-              :err="errInput(errors.value, `family.${index}.relationship`)" />
+              :err="validate(`family.${index}.relationship`)" />
           </td>
           <td>
             <DatePickerField label="Tgl. Lahir" v-model="family.birthdate"
-              :err="errInput(errors.value, `family.${index}.birthdate`)" />
+              :err="validate(`family.${index}.birthdate`)" />
           </td>
           <td>
             <SelectField label="Status Pernikahan" :items="status_pernikahan" v-model="family.marital_status"
-              :err="errInput(errors.value, `family.${index}.marital_status`)" />
+              :err="validate(`family.${index}.marital_status`)" />
           </td>
           <td>
             <v-text-field v-model="family.job" placeholder="Profesi" density="compact" variant="outlined"
-              :error-messages="errInput(errors.value, `family.${index}.job`)" />
+              :error-messages="validate(`family.${index}.job`)" />
           </td>
           <td>
             <v-icon size="large" @click="store.delFamily(index)">mdi-delete</v-icon>

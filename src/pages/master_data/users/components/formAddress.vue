@@ -1,6 +1,8 @@
 <script setup>
 import { useUsersStore } from '@/stores/apps/master-data/users';
 import { ref, computed } from 'vue';
+import SelectField from '@/components/form-input/SelectField.vue';
+import DatePickerField from '@/components/form-input/DatePickerField.vue';
 
 const store = useUsersStore();
 
@@ -11,6 +13,14 @@ const idOptions = ref([
   { id: 'ktp', name: 'KTP' },
   { id: 'passport', name: 'PASSPORT' }
 ]);
+
+const validate = (key)=>{
+  if (errors.value.length > 0) {
+    const error = errors.value.find(error => error.field === key);
+    return error ? error.message : ''
+  }
+  return ''
+}
 </script>
 
 <template>
@@ -24,7 +34,7 @@ const idOptions = ref([
             label="ID Tipe"
             :items="idOptions"
             v-model="form.address.idtype"
-            :error-messages="errInput(errors.value,'address.idtype')"
+            :error-messages="validate('address.idtype')"
           />
         </v-col>
         <v-col cols="12" md="6" sm="12">
@@ -34,7 +44,7 @@ const idOptions = ref([
             density="compact"
             variant="outlined"
             v-model="form.address.idnumber"
-            :error-messages="errInput(errors.value,'address.idnumber')"
+            :error-messages="validate('address.idnumber')"
           />
         </v-col>
         <v-col cols="12" md="6" sm="12">
@@ -44,7 +54,7 @@ const idOptions = ref([
             :label="`Permanen: ${form.address.ispermanent ? 'Ya' : 'Tidak'}`"
             hide-details
             inset
-            :error-messages="errInput(errors.value,'address.ispermanent')"
+            :error-messages="validate('address.ispermanent')"
           />
         </v-col>
 
@@ -53,7 +63,7 @@ const idOptions = ref([
           <DatePickerField
             label="ID Expired"
             v-model="form.address.idexpired"
-            :err="errInput(errors.value,'address.idexpired')"
+            :err="validate('address.idexpired')"
           />
         </v-col>
 
@@ -64,7 +74,7 @@ const idOptions = ref([
             density="compact"
             variant="outlined"
             v-model="form.address.postalcode"
-            :error-messages="errInput(errors.value,'address.postalcode')"
+            :error-messages="validate('address.postalcode')"
           />
         </v-col>
 
@@ -73,7 +83,7 @@ const idOptions = ref([
             label="Alamat Sekarang"
             variant="outlined"
             v-model="form.address.citizenIdAddress"
-            :error-messages="errInput(errors.value,'address.citizenIdAddress')"
+            :error-messages="validate('address.citizenIdAddress')"
           />
         </v-col>
 
@@ -84,7 +94,7 @@ const idOptions = ref([
             :label="`Gunakan alamat sekarang untuk alamat tinggal: ${form.address.useAsResidential}`"
             hide-details
             inset
-            :error-messages="errInput(errors.value,'address.useAsResidential')"
+            :error-messages="validate('address.useAsResidential')"
           />
         </v-col>
 
@@ -93,7 +103,7 @@ const idOptions = ref([
             label="Alamat Tinggal"
             variant="outlined"
             v-model="form.address.residentialAddress"
-            :error-messages="errInput(errors.value,'address.residentialAddress')"
+            :error-messages="validate('address.residentialAddress')"
           />
         </v-col>
       </v-row>

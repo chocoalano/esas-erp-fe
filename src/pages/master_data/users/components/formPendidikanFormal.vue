@@ -1,10 +1,25 @@
 <script setup>
 import { computed } from 'vue';
 import { useUsersStore } from '@/stores/apps/master-data/users';
+import SelectField from '@/components/form-input/SelectField.vue';
+import DatePickerField from '@/components/form-input/DatePickerField.vue';
+import Switch from '@/components/form-input/Switch.vue';
 
 const store = useUsersStore();
 const form = computed(() => store.form.formal_education);
 const errors = computed(() => store.errors);
+const education = ref([
+  { id: 'SD', name: 'SD' },
+  { id: 'SMP', name: 'SMP' },
+  { id: 'SMA/SLTA', name: 'SMA/SLTA' },
+  { id: 'D1', name: 'D1' },
+  { id: 'D2', name: 'D2' },
+  { id: 'D3', name: 'D3' },
+  { id: 'D4', name: 'D4' },
+  { id: 'S1', name: 'S1' },
+  { id: 'S2', name: 'S2' },
+  { id: 'S3', name: 'S3' },
+]);
 const validate = (key)=>{
   if (errors.value.length > 0) {
     const error = errors.value.find(error => error.field === key);
@@ -42,8 +57,8 @@ const validate = (key)=>{
           <td><v-text-field v-model="state.institution" placeholder="Instansi" density="compact" variant="outlined"
               :error-messages="validate(`formal_education.${index}.institution`)" /></td>
           <td>
-              <v-select v-model="state.majors" :items="['SD', 'SMP', 'SMA/SLTA', 'D1', 'D2', 'D3', 'D4', 'S1', 'S2', 'S3']" density="compact" variant="outlined"
-              :error-messages="validate(`formal_education.${index}.majors`)" />
+              <SelectField label="Jenjang" :items="education" v-model="state.majors"
+              :err="validate(`formal_education.${index}.majors`)" />
             </td>
           <td><v-text-field v-model="state.score" placeholder="Skor" density="compact" variant="outlined"
               :error-messages="validate(`formal_education.${index}.score`)" /></td>

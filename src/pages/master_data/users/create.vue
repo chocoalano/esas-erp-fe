@@ -4,11 +4,11 @@
       <formUser v-if="!loading"/>
       <v-skeleton-loader type="article" v-else></v-skeleton-loader>
     </v-col>
-    <v-col cols="12" md="6" sm="12">
+   <v-col cols="12" md="6" sm="12">
       <FormEmploye v-if="!loading"/>
       <v-skeleton-loader type="article" v-else></v-skeleton-loader>
     </v-col>
-    <v-col cols="12" md="6" sm="12">
+     <v-col cols="12" md="6" sm="12">
       <FormAddress v-if="!loading"/>
       <v-skeleton-loader type="article" v-else></v-skeleton-loader>
     </v-col>
@@ -76,6 +76,7 @@ import { useUsersStore } from '@/stores/apps/master-data/users';
 
 const store = useUsersStore();
 const loading = computed(() => store.loading)
+const actLoading = computed(() => store.actLoading)
 
 onMounted(() => {
   store.kelengkapan_form_user()

@@ -2,6 +2,7 @@
 import Swal from 'sweetalert2';
 import { useGroupAbsenStore } from '@/stores/apps/master-data/group_absen';
 import { computed, ref } from 'vue';
+import SelectSearchField from '@/components/form-input/SelectSearchField.vue';
 
 const store = useGroupAbsenStore();
 

@@ -1,14 +1,15 @@
 <script setup>
 import { useUsersStore } from '@/stores/apps/master-data/users';
+import DatePickerField from '@/components/form-input/DatePickerField.vue';
 const store = useUsersStore();
 const form = computed(() => store.form.work_experience)
 const errors = computed(() => store.errors)
 const validate = (key)=>{
-  // if (errors.value.length > 0) {
-  //   const error = errors.value.find(error => error.field === key);
-  //   return error ? error.message : ''
-  // }
-  // return ''
+  if (errors.value.length > 0) {
+    const error = errors.value.find(error => error.field === key);
+    return error ? error.message : ''
+  }
+  return ''
 }
 </script>
 

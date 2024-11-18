@@ -1,6 +1,9 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import { usePerubahanShiftStore } from '@/stores/apps/administrasi/perubahan_shift'
+import SelectSearchField from '@/components/form-input/SelectSearchField.vue'
+import DatePickerField from '@/components/form-input/DatePickerField.vue'
+import SelectField from '@/components/form-input/SelectField.vue'
 
 const store = usePerubahanShiftStore()
 const loading = computed(() => store.loading)

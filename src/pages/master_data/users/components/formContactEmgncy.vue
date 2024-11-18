@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useUsersStore } from '@/stores/apps/master-data/users';
+import SelectField from '@/components/form-input/SelectField.vue';
 
 const store = useUsersStore();
 
@@ -16,6 +17,13 @@ const hubungan = [
   { id: 'sister', name: 'Saudara perempuan' },
   { id: 'child', name: 'Anak' },
 ];
+const validate = (key)=>{
+  if (errors.value.length > 0) {
+    const error = errors.value.find(error => error.field === key);
+    return error ? error.message : ''
+  }
+  return ''
+}
 </script>
 
 <template>
@@ -42,19 +50,19 @@ const hubungan = [
           <td>{{ index + 1 }}</td>
           <td>
             <v-text-field v-model="contact.name" placeholder="Nama" density="compact" variant="outlined"
-              :error-messages="errInput(errors.value, `emergency_contacts.${index}.name`)" />
+              :error-messages="validate(`emergency_contacts.${index}.name`)" />
           </td>
           <td>
             <SelectField label="Hubungan" :items="hubungan" v-model="contact.relationship"
-              :err="errInput(errors.value, `emergency_contacts.${index}.relationship`)" />
+              :err="validate(`emergency_contacts.${index}.relationship`)" />
           </td>
           <td>
             <v-text-field v-model="contact.phone" placeholder="Telpon/HP" density="compact" variant="outlined"
-              :error-messages="errInput(errors.value, `emergency_contacts.${index}.phone`)" />
+              :error-messages="validate(`emergency_contacts.${index}.phone`)" />
           </td>
           <td>
             <v-text-field v-model="contact.profession" placeholder="Profesi" density="compact" variant="outlined"
-              :error-messages="errInput(errors.value, `emergency_contacts.${index}.profession`)" />
+              :error-messages="validate(`emergency_contacts.${index}.profession`)" />
           </td>
           <td>
             <v-icon size="large" @click="store.delEC(index)">mdi-delete</v-icon>

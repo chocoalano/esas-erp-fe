@@ -1,6 +1,8 @@
 <script setup>
 import { useUsersStore } from '@/stores/apps/master-data/users';
 import { ref, computed } from 'vue';
+import DatePickerField from "@/components/form-input/DatePickerField.vue";
+import SelectField from "@/components/form-input/SelectField.vue";
 
 // Inisialisasi store
 const store = useUsersStore();
@@ -36,6 +38,14 @@ const agama = ref([
   { id: 'BUDHA', name: 'Buddha' },
   { id: 'KHONGHUCU', name: 'Khonghucu' },
 ]);
+
+const validate = (key)=>{
+  if (errors.value.length > 0) {
+    const error = errors.value.find(error => error.field === key);
+    return error ? error.message : ''
+  }
+  return ''
+}
 </script>
 
 <template>
@@ -48,55 +58,55 @@ const agama = ref([
       <v-row>
         <v-col cols="12" md="6" sm="12">
           <v-text-field label="Nama" variant="outlined" density="compact" v-model="store.form.user.name"
-            :error-messages="errInput(errors.value,'user.name')" />
+            :error-messages="validate('user.name')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-text-field label="NIK" variant="outlined" density="compact" v-model="store.form.user.nik"
-            :error-messages="errInput(errors.value,'user.nik')" />
+            :error-messages="validate('user.nik')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-text-field label="Email" variant="outlined" density="compact" v-model="store.form.user.email"
-            :error-messages="errInput(errors.value,'user.email')" />
+            :error-messages="validate('user.email')" />
         </v-col>
         <v-col cols="12" md="6" sm="12"
           v-if="hasPermissions('user-create') || hasRole('Developer') || hasRole('Administrator')">
           <SelectField label="Roles" :items="roleOptions" v-model="store.form.user.role" multiple
-            :error-messages="errInput(errors.value,'user.role')" />
+            :error-messages="validate('user.role')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-text-field label="Password" variant="outlined" density="compact" v-model="store.form.user.password"
-            :error-messages="errInput(errors.value,'user.password')" />
+            :error-messages="validate('user.password')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-text-field label="Telpon/HP" variant="outlined" density="compact" v-model="store.form.user.phone"
-            :error-messages="errInput(errors.value,'user.phone')" />
+            :error-messages="validate('user.phone')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-text-field label="Tempat lahir" variant="outlined" density="compact" v-model="store.form.user.placebirth"
-            :error-messages="errInput(errors.value,'user.placebirth')" />
+            :error-messages="validate('user.placebirth')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <DatePickerField label="Tanggal lahir" v-model="store.form.user.datebirth" :err="errInput(errors.value,'user.datebirth')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <SelectField label="Jenis Kelamin" :items="jenis_kelamin" v-model="store.form.user.gender"
-            :error-messages="errInput(errors.value,'user.gender')" />
+            :error-messages="validate('user.gender')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <SelectField label="Gol Darah" :items="gol_darah" v-model="store.form.user.blood"
-            :error-messages="errInput(errors.value,'user.blood')" />
+            :error-messages="validate('user.blood')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <SelectField label="Status Pernikahan" :items="status_pernikahan" v-model="store.form.user.maritalStatus"
-            :error-messages="errInput(errors.value,'user.maritalStatus')" />
+            :error-messages="validate('user.maritalStatus')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <SelectField label="Agama" :items="agama" v-model="store.form.user.religion"
-            :error-messages="errInput(errors.value,'user.religion')" />
+            :error-messages="validate('user.religion')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-file-input variant="outlined" density="compact" label="Foto" v-model="store.form.user.image"
-            :error-messages="errInput(errors.value,'user.image')"></v-file-input>
+            :error-messages="validate('user.image')"></v-file-input>
         </v-col>
       </v-row>
     </v-card-text>

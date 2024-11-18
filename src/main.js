@@ -13,7 +13,6 @@ import '@/styles/style.css'
 // Components & Composables
 import { createApp } from 'vue'
 import App from './App.vue'
-import components from './components' // Group component imports
 
 const app = createApp(App)
 
@@ -23,10 +22,5 @@ requestNotificationPermission()
 
 // Register global mixins
 app.use(globalMixin)
-
-// Register global components
-Object.entries(components).forEach(([name, component]) => {
-  app.component(name, component)
-})
 
 app.mount('#app')
