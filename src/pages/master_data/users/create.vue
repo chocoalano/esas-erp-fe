@@ -45,7 +45,16 @@
       <v-skeleton-loader type="article" v-else></v-skeleton-loader>
     </v-col>
     <v-col cols="12" md="12" sm="12">
-      <v-btn block color="primary" height="50" variant="flat">Simpan</v-btn>
+      <v-btn
+        block
+        color="primary"
+        height="50"
+        variant="flat"
+        :loading="actLoading"
+        @click="store.handleSubmit('create')"
+      >
+        Simpan
+      </v-btn>
     </v-col>
   </v-row>
 </template>
