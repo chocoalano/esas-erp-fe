@@ -69,7 +69,13 @@ const loadItems = async ({ page, itemsPerPage, search }) => {
 };
 
 const submitUser = (items) => {
-  store.submitForm(items);
+  const uId = items.users.map(({id})=>id)
+  const forms = {
+    groupId: items.groupId,
+    users: uId
+  }
+
+  store.submitForm(forms);
 };
 const handleCreate = () => {
   store.submitForm(form.value);
