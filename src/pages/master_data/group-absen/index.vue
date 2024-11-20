@@ -68,11 +68,21 @@ const loadItems = async ({ page, itemsPerPage, search }) => {
   await store.getGroupAbsen({ page, itemsPerPage, search });
 };
 
+const processUsers = (items) => {
+  if (!Array.isArray(items)) {
+    console.error("Invalid input: 'items' must be a valid array.");
+    return [];
+  }
+  return items
+    .filter(e => typeof e === "number" || e?.id)
+    .map(e => (typeof e === "number" ? e : e.id));
+};
+
 const submitUser = (items) => {
-  const uId = items.users.map(({id})=>id)
+  const user = processUsers(items.users)
   const forms = {
     groupId: items.groupId,
-    users: uId
+    users: user
   }
 
   store.submitForm(forms);
@@ -103,15 +113,18 @@ const isRowEditable = (id) => editableRows.value.includes(id);
                 <template v-slot:text>
                   <v-row>
                     <v-col cols="12" md="6" sm="12">
-                      <v-text-field label="Nama" variant="outlined" density="compact" v-model="form.name" :error-messages="errInput(errors, 'name')"/>
+                      <v-text-field label="Nama" variant="outlined" density="compact" v-model="form.name"
+                        :error-messages="errInput(errors, 'name')" />
                     </v-col>
                     <v-col cols="12" md="6" sm="12">
                       <v-select label="Pattern" :items="[
                         'production', 'office', 'warehouse', 'maintenance', 'admin'
-                      ]" variant="outlined" density="compact" v-model="form.patternName" :error-messages="errInput(errors, 'patternName')"/>
+                      ]" variant="outlined" density="compact" v-model="form.patternName"
+                        :error-messages="errInput(errors, 'patternName')" />
                     </v-col>
                     <v-col cols="12" md="12" sm="12">
-                      <v-text-field label="Deskripsi" variant="outlined" density="compact" v-model="form.description" :error-messages="errInput(errors, 'description')"/>
+                      <v-text-field label="Deskripsi" variant="outlined" density="compact" v-model="form.description"
+                        :error-messages="errInput(errors, 'description')" />
                     </v-col>
                   </v-row>
                 </template>
