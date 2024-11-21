@@ -9,6 +9,8 @@ import { registerPlugins } from '@/plugins'
 import { requestNotificationPermission } from '@/plugins/notification'
 import globalMixin from '@/mixins/globalMixin'
 import '@/styles/style.css'
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 // Components & Composables
 import { createApp } from 'vue'
@@ -22,5 +24,6 @@ requestNotificationPermission()
 
 // Register global mixins
 app.use(globalMixin)
+app.component('QuillEditor', QuillEditor)
 
 app.mount('#app')

@@ -1,36 +1,52 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue'
-import Editor from '@tinymce/tinymce-vue'
-import { usePengumumanStore } from '@/stores/apps/master-data/pengumuman'
+import { ref, watch, computed } from 'vue';
+import { usePengumumanStore } from '@/stores/apps/master-data/pengumuman';
+import { useValidate } from './validate';
 
-const store = usePengumumanStore()
-const loading = computed(() => store.loading)
-const errors = computed(() => store.errors)
-const dialog = computed(() => store.dialog)
-const forms = computed(() => store.forms)
+const store = usePengumumanStore();
+const loading = computed(() => store.loading);
+const dialog = computed({
+  get: () => store.dialog,
+  set: (value) => (store.dialog = value),
+});
+const forms = computed(() => store.forms);
 
-const editorConfig = ref({
-  height: 500,
-  menubar: false,
-  plugins: 'lists link image paste help wordcount',
-  toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
-  branding: false,
-})
+// Validasi menggunakan composable
+const { validateField, errors, resetErrors } = useValidate({
+  title: '',
+  value: '',
+});
 
 const close = () => {
-  store.dialog = !store.dialog
-}
-const save = () => {
-  store.submitForm(store.idform)
-}
+  dialog.value = false;
+};
 
-watch(() => store.dialog, (v) => {
-  if (v === false) {
-    store.idform = null
-    store.resetForms()
+const save = async () => {
+  resetErrors(); // Reset error sebelum validasi
+  const isValid = validateField('title', forms.value.title, {
+    required: true,
+    minLength: 5,
+  }) & validateField('value', forms.value.value, {
+    required: true,
+    minLength: 20,
+  });
+
+  if (!isValid) return;
+
+  await store.submitForm(store.idform);
+  close();
+};
+
+// Reset forms dan error ketika dialog ditutup
+watch(dialog, (v) => {
+  if (!v) {
+    store.idform = null;
+    store.resetForms();
+    resetErrors();
   }
-})
+});
 </script>
+
 <template>
   <v-dialog v-model="dialog" max-width="900px">
     <v-card>
@@ -41,16 +57,26 @@ watch(() => store.dialog, (v) => {
       <v-card-text>
         <v-row>
           <v-col cols="12" md="4" sm="12">
-            <v-text-field label="Judul pengumuman" variant="outlined" density="compact" v-model="forms.title"
-              :error-messages="errInput(errors.value, 'timeinAdjustment')" />
+            <v-text-field
+              label="Judul pengumuman"
+              variant="outlined"
+              density="compact"
+              v-model="forms.title"
+              :error-messages="errors.title"
+            />
           </v-col>
           <v-col cols="12" md="4" sm="12">
-            <v-switch v-model="forms.publish"
-              :label="`Publikasi: ${forms.publish > 0 ? 'Dipublish' : 'Tidak dipublish'}`" hide-details
-              inset color="primary"></v-switch>
+            <v-switch
+              v-model="forms.publish"
+              :label="`Publikasi: ${forms.publish ? 'Dipublish' : 'Tidak dipublish'}`"
+              hide-details
+              inset
+              color="primary"
+            />
           </v-col>
           <v-col cols="12" md="12" sm="12">
-            <Editor api-key="1y2xcrnwbiunmm74mc7dvp2yufif40ojh4gvq385t4f8bzch" :init="editorConfig" initial-value="Welcome to TinyMCE!" v-model="forms.value" />
+            <QuillEditor theme="snow" v-model="forms.value" />
+            <div class="error--text">{{ errors.value }}</div>
           </v-col>
         </v-row>
       </v-card-text>
