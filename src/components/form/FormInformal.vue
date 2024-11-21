@@ -1,6 +1,9 @@
 <script setup>
 import { useAuthStore } from '@/stores/apps/auth';
 import { ref, computed } from 'vue';
+import SelectField from '@/components/form-input/SelectField.vue'
+import DatePickerField from '@/components/form-input/DatePickerField.vue'
+import Switch from '../form-input/Switch.vue';
 
 // Inisialisasi store
 const store = useAuthStore();

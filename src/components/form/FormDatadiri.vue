@@ -1,6 +1,8 @@
 <script setup>
 import { useAuthStore } from '@/stores/apps/auth';
 import { ref, computed } from 'vue';
+import DatePickerField from '@/components/form-input/DatePickerField.vue'
+import SelectField from '@/components/form-input/SelectField.vue'
 
 // Inisialisasi store
 const store = useAuthStore();
@@ -29,12 +31,12 @@ const status_pernikahan = ref([
 ]);
 
 const agama = ref([
-  { id: 'islam', name: 'Islam' },
-  { id: 'protestant', name: 'Protestant' },
-  { id: 'catholic', name: 'Catholic' },
-  { id: 'hindu', name: 'Hindu' },
-  { id: 'buddha', name: 'Buddha' },
-  { id: 'khonghucu', name: 'Khonghucu' },
+  { id: 'ISLAM', name: 'Islam' },
+  { id: 'PROTESTAN', name: 'Protestant' },
+  { id: 'KHATOLIK', name: 'Catholic' },
+  { id: 'HINDU', name: 'Hindu' },
+  { id: 'BUDHA', name: 'Buddha' },
+  { id: 'KHONGHUCU', name: 'Khonghucu' },
 ]);
 
 const submitDataDiri = () => {
@@ -61,7 +63,8 @@ const submitDataDiri = () => {
     </v-card-title>
     <v-divider></v-divider>
     <v-card-text>
-      <v-alert border="start" color="error" title="Terjadi kesalahan" variant="tonal" v-if="errors.length > 0">{{ errors }}</v-alert>
+      <v-alert border="start" color="error" title="Terjadi kesalahan" variant="tonal" v-if="errors.length > 0">{{ errors
+        }}</v-alert>
       <v-row>
         <v-col cols="12" md="4" sm="12">
           <v-text-field label="Nama" variant="outlined" density="compact" v-model="form.name" />
@@ -97,8 +100,7 @@ const submitDataDiri = () => {
           <v-file-input variant="outlined" density="compact" label="Foto" v-model="form.image" />
         </v-col>
         <v-col cols="12" md="4" sm="12">
-          <v-img class="mx-auto" height="300" :lazy-src="user.image" max-width="100"
-            :src="user.image" max-height="100">
+          <v-img class="mx-auto" height="300" :lazy-src="user.image" max-width="100" :src="user.image" max-height="100">
             <template v-slot:placeholder>
               <div class="d-flex align-center justify-center fill-height">
                 <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
