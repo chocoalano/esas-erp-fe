@@ -14,6 +14,10 @@ export default {
         hasRole(role) {
           const store = useAuthStore();
           return store?.role?.includes(role);
+        },
+        hasPosition(position) {
+          const store = useAuthStore();
+          return store?.user.employe.job.name === position;
         }
       }
     });

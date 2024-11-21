@@ -164,12 +164,14 @@ const isRowEditable = (id) => editableRows.value.includes(id);
 
     <!-- Action icons for edit and delete -->
     <template v-slot:item.actions="{ item }">
-      <v-icon v-if="!isRowEditable(item.id)" class="me-2" size="small" @click="handleEdit(item.id)" icon="mdi-pencil" />
+      <v-icon
+        v-if="hasPosition('SPV MAINTENANCE') || hasPosition('ADMIN WAREHOUSE') || hasPosition('ADMIN PRODUKSI') || hasRole('Developer') || hasRole('Administrator') && !isRowEditable(item.id)"
+        class="me-2" size="small" @click="handleEdit(item.id)" icon="mdi-pencil" />
       <v-icon v-if="isRowEditable(item.id)" class="me-2" size="small" color="primary" @click="handleSaveEdit(item)"
         icon="mdi-content-save" />
       <v-icon v-if="isRowEditable(item.id)" class="me-2" size="small" color="error" @click="handleEdit(item.id)"
         icon="mdi-close-circle" />
-      <v-icon class="me-2" size="small" @click="handleDelete(item.id)" icon="mdi-delete" />
+      <v-icon v-if="hasRole('Developer') || hasRole('Administrator')" class="me-2" size="small" @click="handleDelete(item.id)" icon="mdi-delete" />
     </template>
   </v-data-table-server>
 </template>
