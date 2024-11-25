@@ -63,7 +63,7 @@ export const useDashboardStore = defineStore('dashboard', {
         const response = await axios.get('https://api.quotable.io/random')
         this.quote = response.data.content
       } catch (error) {
-        console.error('Failed to fetch grid data:', error);
+        console.log('Failed to fetch grid data:', error);
       }
     },
     async fetchGrid() {

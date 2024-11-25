@@ -53,6 +53,7 @@ const deleteItem = async (id) => {
           confirmButton: 'sweet-confirm-button-class',
         }
       })
+      fetchItems()
     } else {
       throw new Error('Failed to delete')
     }
@@ -84,7 +85,8 @@ const deleteItem = async (id) => {
     <v-data-table-server v-model:items-per-page="itemsPerPage" :headers="headers" :items="serverItems"
       :items-length="totalItems" :loading="loading" item-value="name" @update:options="fetchItems">
       <template v-slot:item.gender="{ item }">
-        <v-icon :color="item.gender === 'm' ? 'primary' : 'error'">{{ item.gender === 'm' ? 'mdi-gender-male' : 'mdi-gender-female' }}</v-icon>
+        <v-icon :color="item.gender === 'm' ? 'primary' : 'error'">{{ item.gender === 'm' ? 'mdi-gender-male' :
+          'mdi-gender-female' }}</v-icon>
       </template>
       <template v-slot:item.actions="{ item }">
         <v-icon class="me-2" size="small" @click="editItem(item.id)"

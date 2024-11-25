@@ -19,7 +19,7 @@ export const useUsersStore = defineStore('users', {
     actLoading: false,
     errors: {},
     success: null,
-    avatar:'',
+    avatar: '',
     form: {
       user: {
         name: '', role: [], nik: '', email: '', password: '', phone: '',
@@ -117,7 +117,18 @@ export const useUsersStore = defineStore('users', {
       }
     },
 
-    async postImport(dataimport){
+    async delete(id){
+      this.loading = true;
+      try {
+        const { data } = await api.delete(`/web/users/${id}`);
+      } catch (error) {
+        console.error('Failed to delete user form data:', error);
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async postImport(dataimport) {
       this.actLoading = true;
       try {
         const { data } = await api.post('/web/users/import', dataimport)
@@ -141,7 +152,7 @@ export const useUsersStore = defineStore('users', {
             confirmButton: 'sweet-confirm-button-class',
           }
         });
-      }finally{
+      } finally {
         this.actLoading = false;
       }
     },
@@ -235,7 +246,7 @@ export const useUsersStore = defineStore('users', {
         arrRole.push(e.id)
       });
       this.avatar = image
-      this.form.user = { name, nik, email, phone, placebirth, datebirth, gender, blood, maritalStatus, religion, role:arrRole };
+      this.form.user = { name, nik, email, phone, placebirth, datebirth, gender, blood, maritalStatus, religion, role: arrRole };
       this.form.address = {
         idtype: address.idtype ?? 'ktp',
         idnumber: address.idnumber ?? '',
@@ -288,16 +299,16 @@ export const useUsersStore = defineStore('users', {
       this.form.formal_education = formalEducation;
       const ife = []
       for (const item in informalEducation) {
-        ife.push({ 
-          name: item,name, 
-          start: formatDate(item.start), 
-          finish: formatDate(item.finish), 
-          expired: formatDate(item.expired), 
-          type: item.type ?? '', 
-          duration: item.duration ?? '', 
-          fee: item.fee ?? '', 
-          description: item.description ?? '', 
-          certification: item.certification > 0 ? true : false 
+        ife.push({
+          name: item, name,
+          start: formatDate(item.start),
+          finish: formatDate(item.finish),
+          expired: formatDate(item.expired),
+          type: item.type ?? '',
+          duration: item.duration ?? '',
+          fee: item.fee ?? '',
+          description: item.description ?? '',
+          certification: item.certification > 0 ? true : false
         })
       }
       this.form.informal_education = ife;
