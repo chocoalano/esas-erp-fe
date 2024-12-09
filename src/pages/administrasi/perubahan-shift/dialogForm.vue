@@ -2,7 +2,6 @@
 import { onMounted, ref, watch } from 'vue'
 import { usePerubahanShiftStore } from '@/stores/apps/administrasi/perubahan_shift'
 import SelectSearchField from '@/components/form-input/SelectSearchField.vue'
-import DatePickerField from '@/components/form-input/DatePickerField.vue'
 import SelectField from '@/components/form-input/SelectField.vue'
 
 const store = usePerubahanShiftStore()
@@ -61,7 +60,7 @@ const statusOption = ref([
               @update:model-value="handleChangeFetchUser(forms.userId)" />
           </v-col>
           <v-col cols="12" md="3" sm="12">
-            <DatePickerField label="Tanggal" v-model="forms.date" :err="errInput(errors.value, 'date')" @update:model-value="handleChangeFetchSchedule(forms.userId, forms.date)"/>
+            <v-date-input label="Tanggal" v-model="forms.date" :error-messages="errInput(errors.value, 'date')" @update:model-value="handleChangeFetchSchedule(forms.userId, forms.date)"/>
           </v-col>
           <v-col cols="12" md="3" sm="12">
             <SelectField label="Apakah pengajuan ini disetujui?" :items="statusOption" v-model="forms.status"

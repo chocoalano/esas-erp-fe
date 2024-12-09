@@ -1,6 +1,5 @@
 <script setup>
 import { useUsersStore } from '@/stores/apps/master-data/users';
-import DatePickerField from "@/components/form-input/DatePickerField.vue";
 import SelectField from "@/components/form-input/SelectField.vue";
 import SelectSearchField from '@/components/form-input/SelectSearchField.vue';
 
@@ -36,12 +35,12 @@ const validate = (key)=>{
             :err="validate('employe.status')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
-          <DatePickerField label="Tgl. Bergabung" v-model="form.employe.joinDate"
-            :err="validate('employe.joinDate')" />
+          <v-date-input label="Tgl. Bergabung" v-model="form.employe.joinDate"
+            :error-messages="validate('employe.joinDate')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
-          <DatePickerField label="Tgl. Masuk" v-model="form.employe.signDate"
-            :err="validate('employe.signDate')" />
+          <v-date-input label="Tgl. Masuk" v-model="form.employe.signDate"
+            :error-messages="validate('employe.signDate')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <SelectField label="Departemen" :items="departemen" v-model="form.employe.organizationId"

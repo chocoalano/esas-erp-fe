@@ -2,7 +2,6 @@
 import { useUsersStore } from '@/stores/apps/master-data/users';
 import { ref, computed } from 'vue';
 import SelectField from '@/components/form-input/SelectField.vue';
-import DatePickerField from '@/components/form-input/DatePickerField.vue';
 
 const store = useUsersStore();
 
@@ -60,10 +59,12 @@ const validate = (key)=>{
 
         <!-- Conditionally render the DatePickerField if address is not permanent -->
         <v-col cols="12" md="6" sm="12" v-if="!form.address.ispermanent">
-          <DatePickerField
+          <v-date-input
             label="ID Expired"
+            density="compact"
+            variant="outlined"
             v-model="form.address.idexpired"
-            :err="validate('address.idexpired')"
+            :error-messages="validate('address.idexpired')"
           />
         </v-col>
 

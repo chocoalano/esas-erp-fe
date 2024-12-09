@@ -2,7 +2,6 @@
 import { onMounted, ref, watch } from 'vue'
 import { useKoreksiAbsenStore } from '@/stores/apps/administrasi/koreksi_absen'
 import SelectSearchField from '@/components/form-input/SelectSearchField.vue';
-import DatePickerField from '@/components/form-input/DatePickerField.vue';
 
 const store = useKoreksiAbsenStore()
 const loading = computed(() => store.loading)
@@ -21,9 +20,6 @@ const save = () => {
 }
 const handleChangeFetchUser = (userId) => {
   store.fetchUserApprovalOptions(userId)
-}
-const handleChangeFetchSchedule = (userId, tanggal) => {
-  store.fetchCurrentScheduleOptions(userId, tanggal)
 }
 
 onMounted(() => {
@@ -58,7 +54,7 @@ watch(() => store.dialog, (v) => {
             <v-text-field label="Pilih jam pulang diajukan" type="time" variant="outlined" density="compact" v-model="forms.timeoutAdjustment" :error-messages="errInput(errors.value, 'timeoutAdjustment')"/>
           </v-col>
           <v-col cols="12" md="4" sm="12">
-            <DatePickerField label="Tanggal" v-model="forms.dateAdjustment" :err="errInput(errors.value, 'dateAdjustment')" />
+            <v-date-input label="Tanggal" variant="outlined" density="compact" v-model="forms.dateAdjustment" :error-messages="errInput(errors.value, 'dateAdjustment')" />
           </v-col>
           <v-col cols="12" md="4" sm="12">
             <SelectSearchField label="Pilih line approval" :items="usersLineApprovalOptions" v-model="forms.lineId" :err="errInput(errors.value, 'lineId')"/>

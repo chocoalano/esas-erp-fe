@@ -23,23 +23,23 @@ export const useUsersStore = defineStore('users', {
     form: {
       user: {
         name: '', role: [], nik: '', email: '', password: '', phone: '',
-        placebirth: '', datebirth: formatDate(), gender: '', blood: '',
+        placebirth: '', datebirth: null, gender: '', blood: '',
         maritalStatus: '', religion: '', image: []
       },
       address: {
-        idtype: 'ktp', idnumber: '', idexpired: formatDate(), ispermanent: false,
+        idtype: 'ktp', idnumber: '', idexpired: null, ispermanent: false,
         postalcode: '', citizenIdAddress: '', useAsResidential: false, residentialAddress: ''
       },
       bank: { bankName: '', bankAccount: '', bankAccountHolder: '' },
       bpjs: {
         bpjsKetenagakerjaan: false, nppBpjsKetenagakerjaan: '',
-        bpjsKetenagakerjaanDate: formatDate(), bpjsKesehatan: false,
-        bpjsKesehatanFamily: false, bpjsKesehatanDate: formatDate(),
-        bpjsKesehatanCost: 0, jhtCost: formatDate(), jaminanPensiunCost: 0,
-        jaminanPensiunDate: formatDate()
+        bpjsKetenagakerjaanDate: null, bpjsKesehatan: false,
+        bpjsKesehatanFamily: false, bpjsKesehatanDate: null,
+        bpjsKesehatanCost: 0, jhtCost: null, jaminanPensiunCost: 0,
+        jaminanPensiunDate: null
       },
       employe: {
-        companyId: '', branchId: '', status: '', joinDate: formatDate(), signDate: formatDate(),
+        companyId: '', branchId: '', status: '', joinDate: null, signDate: null,
         organizationId: '', jobPositionId: '', jobLevelId: '',
         approvalLine: '', approvalManager: ''
       },
@@ -48,9 +48,9 @@ export const useUsersStore = defineStore('users', {
 
       emergency_contacts: [{ name: '', relationship: '', phone: '', profession: '' }],
       family: [{ fullname: '', relationship: '', birthdate: '', marital_status: '', job: '' }],
-      formal_education: [{ institution: '', majors: '', score: '', start: formatDate(), finish: formatDate(), description: '', certification: false }],
-      informal_education: [{ name: '', start: formatDate(), finish: formatDate(), expired: formatDate(), type: '', duration: '', fee: '', description: '', certification: false }],
-      work_experience: [{ company: '', position: '', from: formatDate(), to: formatDate(), length_of_service: '' }],
+      formal_education: [{ institution: '', majors: '', score: '', start: null, finish: null, description: '', certification: false }],
+      informal_education: [{ name: '', start: null, finish: null, expired: null, type: '', duration: '', fee: '', description: '', certification: false }],
+      work_experience: [{ company: '', position: '', from: null, to: null, length_of_service: '' }],
     },
     roleOptions: [],
     company: [], branch: [], departemen: [], jabatan: [], level: [], approval: [],
@@ -117,7 +117,7 @@ export const useUsersStore = defineStore('users', {
       }
     },
 
-    async delete(id){
+    async delete(id) {
       this.loading = true;
       try {
         const { data } = await api.delete(`/web/users/${id}`);
@@ -204,7 +204,16 @@ export const useUsersStore = defineStore('users', {
             Object.keys(item).forEach(key => {
               const value = item[key];
               if (value !== undefined && value !== null) {
-                formData.append(`${keyPrefix}[${index}][${key}]`, value);
+                const formKey = `${keyPrefix}[${index}][${key}]`;
+                if (value instanceof Date) {
+                  if (!isNaN(value.getTime())) {
+                    formData.append(formKey, value.toISOString().split('T')[0])
+                  } else {
+                    formData.append(formKey, new Date().toISOString().split('T')[0])
+                  }
+                } else {
+                  formData.append(formKey, value);
+                }
               }
             });
           });
@@ -213,7 +222,15 @@ export const useUsersStore = defineStore('users', {
             const value = data[key];
             const formKey = keyPrefix ? `${keyPrefix}[${key}]` : key;
             if (value !== undefined && value !== null) {
-              formData.append(formKey, value);
+              if (value instanceof Date) {
+                if (!isNaN(value.getTime())) {
+                  formData.append(formKey, value.toISOString().split('T')[0])
+                } else {
+                  formData.append(formKey, new Date().toISOString().split('T')[0])
+                }
+              } else {
+                formData.append(formKey, value);
+              }
             }
           });
         }
@@ -246,52 +263,61 @@ export const useUsersStore = defineStore('users', {
         arrRole.push(e.id)
       });
       this.avatar = image
-      this.form.user = { name, nik, email, phone, placebirth, datebirth, gender, blood, maritalStatus, religion, role: arrRole };
+      this.form.user = { name, nik, email, phone, placebirth, datebirth: new Date(datebirth), gender, blood, maritalStatus, religion, role: arrRole };
       this.form.address = {
-        idtype: address.idtype ?? 'ktp',
-        idnumber: address.idnumber ?? '',
-        idexpired: address.idexpired ?? formatDate(),
-        ispermanent: address.ispermanent ?? false,
-        postalcode: address.postalcode ?? '',
-        citizenIdAddress: address.citizenIdAddress ?? '',
-        useAsResidential: address.useAsResidential ?? false,
-        residentialAddress: address.residentialAddress ?? ''
+        idtype: address?.idtype ?? 'ktp',
+        idnumber: address?.idnumber ?? '',
+        idexpired: new Date(address?.idexpired) ?? new Date(),
+        ispermanent: address?.ispermanent ?? false,
+        postalcode: address?.postalcode ?? '',
+        citizenIdAddress: address?.citizenIdAddress ?? '',
+        useAsResidential: address?.useAsResidential ?? false,
+        residentialAddress: address?.residentialAddress ?? ''
       };
-      this.form.bank = { bankName: bank.bankName ?? '', bankAccount: bank.bankAccount ?? '', bankAccountHolder: bank.bankAccountHolder ?? '' };
+      this.form.bank = { bankName: bank?.bankName ?? '', bankAccount: bank?.bankAccount ?? '', bankAccountHolder: bank?.bankAccountHolder ?? '' };
       this.form.bpjs = {
-        bpjsKetenagakerjaan: bpjs.bpjsKetenagakerjaan ?? '',
-        nppBpjsKetenagakerjaan: bpjs.nppBpjsKetenagakerjaan ?? '',
-        bpjsKetenagakerjaanDate: bpjs.bpjsKetenagakerjaanDate ?? formatDate(),
-        bpjsKesehatan: bpjs.bpjsKesehatan ?? false,
-        bpjsKesehatanFamily: bpjs.bpjsKesehatanFamily ?? false,
-        bpjsKesehatanDate: bpjs.bpjsKesehatanDate ?? formatDate(),
-        bpjsKesehatanCost: bpjs.bpjsKesehatanCost ?? 0,
-        jhtCost: bpjs.jhtCost ?? formatDate(),
-        jaminanPensiunCost: bpjs.jaminanPensiunCost ?? 0,
-        jaminanPensiunDate: bpjs.jaminanPensiunDate ?? formatDate()
+        bpjsKetenagakerjaan: bpjs?.bpjsKetenagakerjaan ?? '',
+        nppBpjsKetenagakerjaan: bpjs?.nppBpjsKetenagakerjaan ?? '',
+        bpjsKetenagakerjaanDate: new Date(bpjs?.bpjsKetenagakerjaanDate) ?? new Date(),
+        bpjsKesehatan: bpjs?.bpjsKesehatan ?? false,
+        bpjsKesehatanFamily: bpjs?.bpjsKesehatanFamily ?? false,
+        bpjsKesehatanDate: new Date(bpjs?.bpjsKesehatanDate) ?? new Date(),
+        bpjsKesehatanCost: bpjs?.bpjsKesehatanCost ?? 0,
+        jhtCost: new Date(bpjs?.jhtCost) ?? new Date(),
+        jaminanPensiunCost: bpjs?.jaminanPensiunCost ?? 0,
+        jaminanPensiunDate: new Date(bpjs?.jaminanPensiunDate) ?? new Date()
       };
-      this.form.salary = salary;
+      this.form.salary = {
+        basicSalary: salary?.basicSalary,
+        salaryType: salary?.salaryType,
+        paymentSchedule: salary?.paymentSchedule,
+        prorateSettings: salary?.prorateSettings,
+        overtimeSettings: salary?.overtimeSettings,
+        costCenter: salary?.costCenter,
+        costCenterCategory: salary?.costCenterCategory,
+        currency: salary?.currency,
+      };
       this.form.employe = {
-        companyId: employe.companyId ?? '',
-        branchId: employe.branchId ?? '',
-        status: employe.status ?? '',
-        joinDate: employe.joinDate ?? formatDate(),
-        signDate: employe.signDate ?? formatDate(),
-        organizationId: employe.organizationId ?? '',
-        jobPositionId: employe.jobPositionId ?? '',
-        jobLevelId: employe.jobLevelId ?? '',
-        approvalLine: employe.approvalLine ?? '',
-        approvalManager: employe.approvalManager ?? ''
+        companyId: employe?.companyId ?? '',
+        branchId: employe?.branchId ?? '',
+        status: employe?.status ?? '',
+        joinDate: new Date(employe?.joinDate) ?? new Date(),
+        signDate: new Date(employe?.signDate) ?? new Date(),
+        organizationId: employe?.organizationId ?? '',
+        jobPositionId: employe?.jobPositionId ?? '',
+        jobLevelId: employe?.jobLevelId ?? '',
+        approvalLine: employe?.approvalLine ?? '',
+        approvalManager: employe?.approvalManager ?? ''
       };
       this.form.tax = {
-        npwp15DigitOld: taxConfig.npwp15DigitOld ?? '',
-        npwp16DigitNew: taxConfig.npwp16DigitNew ?? '',
-        ptkpStatus: taxConfig.ptkpStatus ?? '',
-        taxMethod: taxConfig.taxMethod ?? 'gross',
-        taxSalary: taxConfig.taxSalary ?? 'taxable',
-        empTaxStatus: taxConfig.empTaxStatus ?? '',
-        beginningNetto: taxConfig.beginningNetto ?? 0,
-        pph21_paid: taxConfig.pph21_paid ?? 0
+        npwp15DigitOld: taxConfig?.npwp15DigitOld ?? '',
+        npwp16DigitNew: taxConfig?.npwp16DigitNew ?? '',
+        ptkpStatus: taxConfig?.ptkpStatus ?? '',
+        taxMethod: taxConfig?.taxMethod ?? 'gross',
+        taxSalary: taxConfig?.taxSalary ?? 'taxable',
+        empTaxStatus: taxConfig?.empTaxStatus ?? '',
+        beginningNetto: taxConfig?.beginningNetto ?? 0,
+        pph21_paid: taxConfig?.pph21_paid ?? 0
       };
 
       this.form.emergency_contacts = emergencyContact;
@@ -301,9 +327,9 @@ export const useUsersStore = defineStore('users', {
       for (const item in informalEducation) {
         ife.push({
           name: item, name,
-          start: formatDate(item.start),
-          finish: formatDate(item.finish),
-          expired: formatDate(item.expired),
+          start: new Date(item.start) ?? new Date(),
+          finish: new Date(item.finish) ?? new Date(),
+          expired: new Date(item.expired) ?? new Date(),
           type: item.type ?? '',
           duration: item.duration ?? '',
           fee: item.fee ?? '',

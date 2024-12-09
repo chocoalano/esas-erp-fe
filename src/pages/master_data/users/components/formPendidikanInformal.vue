@@ -1,7 +1,6 @@
 <script setup>
 import { useUsersStore } from '@/stores/apps/master-data/users';
 import { computed, ref } from 'vue';
-import DatePickerField from "@/components/form-input/DatePickerField.vue";
 import SelectField from "@/components/form-input/SelectField.vue";
 import Switch from "@/components/form-input/Switch.vue";
 
@@ -55,13 +54,13 @@ const validate = (key)=>{
               :error-messages="validate(`informal_education.${index}.name`)" />
           </td>
           <td>
-            <DatePickerField label="Tgl. Mulai" v-model="state.start" :err="validate(`informal_education.${index}.start`)" />
+            <v-date-input label="Tgl. Mulai" v-model="state.start" :error-messages="validate(`informal_education.${index}.start`)" />
           </td>
           <td>
-            <DatePickerField label="Tgl. Selesai" v-model="state.finish" :err="validate(`informal_education.${index}.finish`)" />
+            <v-date-input label="Tgl. Selesai" variant="outlined" density="compact" v-model="state.finish" :error-messages="validate(`informal_education.${index}.start`)"/>
           </td>
           <td>
-            <DatePickerField label="Masa Berlaku" v-model="state.expired" :err="validate(`informal_education.${index}.expired`)" />
+            <v-date-input label="Masa Berlaku" variant="outlined" density="compact" v-model="state.expired" :error-messages="validate(`informal_education.${index}.expired`)"/>
           </td>
           <td>
             <SelectField label="Jenis" :items="jenis" v-model="state.type" :err="validate(`informal_education.${index}.type`)" />

@@ -1,6 +1,5 @@
 <script setup>
 import { useUsersStore } from '@/stores/apps/master-data/users';
-import DatePickerField from "@/components/form-input/DatePickerField.vue";
 
 const store = useUsersStore();
 const errors = computed(() => store.errors)
@@ -48,8 +47,8 @@ const validate = (key)=>{
             :error-messages="validate('bpjs.nppBpjsKetenagakerjaan')"></v-text-field>
         </v-col>
         <v-col cols="12" md="6" sm="12">
-          <DatePickerField label="Tgl. Terdaftar BPJS Ketenagakerjaan" v-model="store.form.bpjs.bpjsKetenagakerjaanDate"
-            :err="validate('bpjs.bpjsKetenagakerjaanDate')" />
+            <v-date-input label="Tgl. Terdaftar BPJS Ketenagakerjaan" variant="outlined" density="compact" v-model="store.form.bpjs.bpjsKetenagakerjaanDate"
+              :error-messages="validate('bpjs.bpjsKetenagakerjaanDate')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-text-field label="BPJS Kesehatan" density="compact" variant="outlined"
@@ -62,8 +61,8 @@ const validate = (key)=>{
             :error-messages="validate('bpjs.bpjsKesehatanFamily')"></v-text-field>
         </v-col>
         <v-col cols="12" md="6" sm="12">
-          <DatePickerField label="Tgl. Terdaftar BPJS Kesehatan" v-model="store.form.bpjs.bpjsKesehatanDate"
-            :err="validate('bpjs.bpjsKesehatanDate')" />
+          <v-date-input label="Tgl. Terdaftar BPJS Kesehatan" v-model="store.form.bpjs.bpjsKesehatanDate"
+            :error-messages="validate('bpjs.bpjsKesehatanDate')" density="compact" variant="outlined"/>
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-text-field label="Biaya BPJS Kesehatan" density="compact" variant="outlined"
@@ -71,8 +70,8 @@ const validate = (key)=>{
             :error-messages="validate('bpjs.bpjsKesehatanCost')"></v-text-field>
         </v-col>
         <v-col cols="12" md="6" sm="12">
-          <DatePickerField label="Tgl. BPJS JHT" v-model="store.form.bpjs.jhtCost"
-            :err="validate('bpjs.jhtCost')" />
+          <v-date-input label="Tgl. BPJS JHT" v-model="store.form.bpjs.jhtCost"
+            :error-messages="validate('bpjs.jhtCost')" density="compact" variant="outlined"/>
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <v-text-field label="Biaya BPJS JP" density="compact" variant="outlined"
@@ -80,8 +79,8 @@ const validate = (key)=>{
             :error-messages="validate('bpjs.jaminanPensiunCost')"></v-text-field>
         </v-col>
         <v-col cols="12" md="6" sm="12">
-          <DatePickerField label="Tgl. BPJS JP" v-model="store.form.bpjs.jaminanPensiunDate"
-            :err="validate('bpjs.jaminanPensiunDate')" />
+          <v-date-input label="Tgl. BPJS JP" v-model="store.form.bpjs.jaminanPensiunDate"
+            :error-messages="validate('bpjs.jaminanPensiunDate')" />
         </v-col>
       </v-row>
     </v-card-text>

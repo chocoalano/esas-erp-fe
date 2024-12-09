@@ -1,6 +1,5 @@
 <script setup>
 import { useUsersStore } from '@/stores/apps/master-data/users';
-import DatePickerField from '@/components/form-input/DatePickerField.vue';
 const store = useUsersStore();
 const form = computed(() => store.form.work_experience)
 const errors = computed(() => store.errors)
@@ -39,13 +38,13 @@ const validate = (key)=>{
               :error-messages="validate(`work_experience.${index}.company`)" />
           </td>
           <td>
-            <DatePickerField label="Tgl. Mulai" v-model="state.start" :err="validate(`work_experience.${index}.start`)" />
+            <v-date-input label="Tanggal lahir" variant="outlined" density="compact" v-model="state.start" :error-messages="validate(`work_experience.${index}.start`)"/>
           </td>
           <td>
-            <DatePickerField label="Tgl. Selesai" v-model="state.finish" :err="validate(`work_experience.${index}.finish`)" />
+            <v-date-input label="Tanggal lahir" variant="outlined" density="compact" v-model="state.finish" :error-messages="validate(`work_experience.${index}.finish`)"/>
           </td>
           <td>
-            <DatePickerField label="Masa Berlaku" v-model="state.expired" :err="validate(`work_experience.${index}.expired`)" />
+            <v-date-input label="Tanggal lahir" variant="outlined" density="compact" v-model="state.expired" :error-messages="validate(`work_experience.${index}.expired`)"/>
           </td>
           <td>
             <v-text-field v-model="state.type" placeholder="Jenis" density="compact" variant="outlined"

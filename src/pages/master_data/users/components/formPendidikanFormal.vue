@@ -2,7 +2,6 @@
 import { computed } from 'vue';
 import { useUsersStore } from '@/stores/apps/master-data/users';
 import SelectField from '@/components/form-input/SelectField.vue';
-import DatePickerField from '@/components/form-input/DatePickerField.vue';
 import Switch from '@/components/form-input/Switch.vue';
 
 const store = useUsersStore();
@@ -20,7 +19,7 @@ const education = ref([
   { id: 'S2', name: 'S2' },
   { id: 'S3', name: 'S3' },
 ]);
-const validate = (key)=>{
+const validate = (key) => {
   if (errors.value.length > 0) {
     const error = errors.value.find(error => error.field === key);
     return error ? error.message : ''
@@ -57,17 +56,19 @@ const validate = (key)=>{
           <td><v-text-field v-model="state.institution" placeholder="Instansi" density="compact" variant="outlined"
               :error-messages="validate(`formal_education.${index}.institution`)" /></td>
           <td>
-              <SelectField label="Jenjang" :items="education" v-model="state.majors"
+            <SelectField label="Jenjang" :items="education" v-model="state.majors"
               :err="validate(`formal_education.${index}.majors`)" />
-            </td>
+          </td>
           <td><v-text-field v-model="state.score" placeholder="Skor" density="compact" variant="outlined"
               :error-messages="validate(`formal_education.${index}.score`)" /></td>
           <td>
-            <DatePickerField label="Mulai" v-model="state.start"
-              :err="validate(`formal_education.${index}.start`)" /></td>
+            <v-date-input label="Tgl. Selesai" variant="outlined" density="compact" v-model="state.start"
+              :error-messages="validate(`formal_education.${index}.start`)" />
+          </td>
           <td>
-            <DatePickerField label="Selesai" v-model="state.finish"
-              :err="validate(`formal_education.${index}.finish`)" /></td>
+            <v-date-input label="Tgl. Selesai" variant="outlined" density="compact" v-model="state.finish"
+              :error-messages="validate(`formal_education.${index}.finish`)" />
+          </td>
           <td><v-text-field v-model="state.description" placeholder="Keterangan" density="compact" variant="outlined"
               :error-messages="validate(`formal_education.${index}.description`)" /></td>
           <td>

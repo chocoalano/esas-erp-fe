@@ -17,7 +17,7 @@ export const usePerubahanShiftStore = defineStore('perubahan_shift', {
     dialog: false,
     forms: {
       userId: '',
-      date: '',
+      date: null,
       currentGroup: '',
       currentShift: '',
       adjustShift: '',

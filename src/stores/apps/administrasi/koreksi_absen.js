@@ -17,7 +17,7 @@ export const useKoreksiAbsenStore = defineStore('koreksi_absen', {
     dialog: false,
     forms: {
       userId: '',
-      dateAdjustment: '',
+      dateAdjustment: null,
       timeinAdjustment: '',
       timeoutAdjustment: '',
       notes: '',

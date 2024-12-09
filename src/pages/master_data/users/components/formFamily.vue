@@ -2,7 +2,6 @@
 import { computed } from 'vue';
 import { useUsersStore } from '@/stores/apps/master-data/users';
 import SelectField from '@/components/form-input/SelectField.vue';
-import DatePickerField from '@/components/form-input/DatePickerField.vue';
 
 const store = useUsersStore();
 const form = computed(() => store.form.family);
@@ -64,8 +63,8 @@ const validate = (key)=>{
               :err="validate(`family.${index}.relationship`)" />
           </td>
           <td>
-            <DatePickerField label="Tgl. Lahir" v-model="family.birthdate"
-              :err="validate(`family.${index}.birthdate`)" />
+            <v-date-input label="Tgl. Lahir" v-model="family.birthdate" density="compact" variant="outlined"
+              :error-messages="validate(`family.${index}.birthdate`)" />
           </td>
           <td>
             <SelectField label="Status Pernikahan" :items="status_pernikahan" v-model="family.marital_status"

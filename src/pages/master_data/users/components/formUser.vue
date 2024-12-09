@@ -1,7 +1,6 @@
 <script setup>
 import { useUsersStore } from '@/stores/apps/master-data/users';
 import { ref, computed } from 'vue';
-import DatePickerField from "@/components/form-input/DatePickerField.vue";
 import SelectField from "@/components/form-input/SelectField.vue";
 
 // Inisialisasi store
@@ -39,7 +38,7 @@ const agama = ref([
   { id: 'KHONGHUCU', name: 'Khonghucu' },
 ]);
 
-const validate = (key)=>{
+const validate = (key) => {
   if (errors.value.length > 0) {
     const error = errors.value.find(error => error.field === key);
     return error ? error.message : ''
@@ -86,7 +85,7 @@ const validate = (key)=>{
             :error-messages="validate('user.placebirth')" />
         </v-col>
         <v-col cols="12" md="6" sm="12">
-          <DatePickerField label="Tanggal lahir" v-model="store.form.user.datebirth" :err="errInput(errors.value,'user.datebirth')" />
+          <v-date-input label="Tanggal lahir" variant="outlined" density="compact" v-model="store.form.user.datebirth" :error-messages="validate('user.datebirth')"/>
         </v-col>
         <v-col cols="12" md="6" sm="12">
           <SelectField label="Jenis Kelamin" :items="jenis_kelamin" v-model="store.form.user.gender"
@@ -111,8 +110,7 @@ const validate = (key)=>{
       </v-row>
     </v-card-text>
     <v-card-actions v-if="avatar !== ''">
-      <v-img class="mx-auto" height="300" :lazy-src="avatar" max-width="500"
-        :src="avatar">
+      <v-img class="mx-auto" height="300" :lazy-src="avatar" max-width="500" :src="avatar">
         <template v-slot:placeholder>
           <div class="d-flex align-center justify-center fill-height">
             <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>

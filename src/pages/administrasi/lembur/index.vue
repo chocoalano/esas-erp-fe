@@ -3,7 +3,6 @@ import Swal from 'sweetalert2';
 import { useLemburStore } from '@/stores/apps/administrasi/lembur';
 import { computed, ref } from 'vue';
 import SelectSearchField from '@/components/form-input/SelectSearchField.vue'
-import DatePickerField from '@/components/form-input/DatePickerField.vue'
 import Alert from '@/components/Alert.vue';
 
 const store = useLemburStore();
@@ -138,10 +137,10 @@ const handleChangeFetchApproval = (userId) => {
                 <v-divider class="mb-4 mt-2"></v-divider>
                 <v-row>
                   <v-col cols="12" md="2" sm="12">
-                    <DatePickerField label="Tanggal diajukan" v-model="item.dateSpl" />
+                    <v-date-input variant="outluned" density="compact" label="Tanggal diajukan" v-model="item.dateSpl" />
                   </v-col>
                   <v-col cols="12" md="2" sm="12">
-                    <DatePickerField label="Tanggal dikerjakan" v-model="item.dateOvertimeAt" />
+                    <v-date-input variant="outluned" density="compact" label="Tanggal dikerjakan" v-model="item.dateOvertimeAt" />
                   </v-col>
                   <v-col cols="12" md="2" sm="12">
                     <SelectSearchField label="Departemen" :items="organizations" v-model="item.organizationId" @update:model-value="handleChangeFetchUser(item.organizationId, item.jobPositionId)" />

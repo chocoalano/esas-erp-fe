@@ -2,7 +2,6 @@
 import { onMounted, watch } from 'vue'
 import { useCutiStore } from '@/stores/apps/administrasi/cuti'
 import SelectSearchField from '@/components/form-input/SelectSearchField.vue'
-import DatePickerField from '@/components/form-input/DatePickerField.vue'
 import SelectField from '@/components/form-input/SelectField.vue'
 
 const store = useCutiStore()
@@ -71,10 +70,10 @@ const type = ref([
               @update:model-value="handleChangeFetchUser(forms.userId)" />
           </v-col>
           <v-col cols="12" md="4" sm="12">
-            <DatePickerField label="Tanggal mulai" v-model="forms.startDate" :err="errInput(errors.value ,'startDate')" />
+            <v-date-input label="Tanggal mulai" v-model="forms.startDate" variant="outlined" density="compact" :error-messages="errInput(errors.value ,'startDate')" />
           </v-col>
           <v-col cols="12" md="4" sm="12">
-            <DatePickerField label="Tanggal selesai" v-model="forms.endDate" :err="errInput(errors.value ,'endDate')" />
+            <v-date-input label="Tanggal selesai" v-model="forms.endDate" variant="outlined" density="compact" :error-messages="errInput(errors.value ,'endDate')" />
           </v-col>
           <v-col cols="12" md="4" sm="12">
             <v-text-field label="Jam mulai" type="time" variant="outlined" density="compact" v-model="forms.startTime"

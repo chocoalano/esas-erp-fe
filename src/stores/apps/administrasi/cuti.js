@@ -17,8 +17,8 @@ export const useCutiStore = defineStore('cuti', {
     dialog: false,
     forms: {
       userId: '',
-      startDate: '',
-      endDate: '',
+      startDate: null,
+      endDate: null,
       startTime: '',
       endTime: '',
       category: '',
