@@ -1,7 +1,6 @@
 <script setup>
 import { useAuthStore } from '@/stores/apps/auth';
 import { computed } from 'vue';
-import DatePickerField from '@/components/form-input/DatePickerField.vue'
 
 // Inisialisasi store
 const store = useAuthStore();
@@ -37,10 +36,10 @@ const submitWE = () => {
               <v-text-field v-model="state.position" placeholder="Sebagai ?" density="compact" variant="outlined" />
             </v-col>
             <v-col cols="12" md="3" sm="12">
-              <DatePickerField label="Tgl. Mulai" v-model="state.from" />
+              <v-date-input variant="outlined" density="compact" label="Tgl. Mulai" v-model="state.from" />
             </v-col>
             <v-col cols="12" md="3" sm="12">
-              <DatePickerField label="Tgl. Selesai" v-model="state.to" />
+              <v-date-input variant="outlined" density="compact" label="Tgl. Selesai" v-model="state.to" />
             </v-col>
             <v-col cols="12" md="6" sm="12">
               <v-text-field type="number" v-model="state.length_of_service" placeholder="Lama dalam satuan angka" density="compact" variant="outlined" />

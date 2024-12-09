@@ -2,7 +2,6 @@
 import { useAuthStore } from '@/stores/apps/auth';
 import { ref, computed } from 'vue';
 import SelectField from '@/components/form-input/SelectField.vue'
-import DatePickerField from '@/components/form-input/DatePickerField.vue'
 
 // Inisialisasi store
 const store = useAuthStore();
@@ -55,7 +54,7 @@ const submitFamily = () => {
               <SelectField label="Hubungan" :items="hubungan" v-model="state.relationship" />
             </v-col>
             <v-col cols="12" md="4" sm="12">
-              <DatePickerField label="Tgl. Lahir" v-model="state.birthdate" />
+              <v-date-input variant="outlined" density="compact" label="Tgl. Lahir" v-model="state.birthdate" />
             </v-col>
             <v-col cols="12" md="6" sm="12">
               <SelectField label="Status Pernikahan" :items="status_pernikahan" v-model="state.marital_status" />

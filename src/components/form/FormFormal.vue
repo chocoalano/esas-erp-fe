@@ -2,7 +2,6 @@
 import { useAuthStore } from '@/stores/apps/auth';
 import { ref, computed } from 'vue';
 import SelectField from '@/components/form-input/SelectField.vue'
-import DatePickerField from '@/components/form-input/DatePickerField.vue'
 
 // Inisialisasi store
 const store = useAuthStore();
@@ -53,10 +52,10 @@ const submitFormal = () => {
               <v-text-field v-model="state.score" type="number" placeholder="Skor" density="compact" variant="outlined" rounded="0" />
             </v-col>
             <v-col cols="12" md="3" sm="12">
-              <DatePickerField label="Tgl. Dimulai" v-model="state.start" />
+              <v-date-input variant="outlined" density="compact" label="Tgl. Dimulai" v-model="state.start" />
             </v-col>
             <v-col cols="12" md="3" sm="12">
-              <DatePickerField label="Tgl. Berakhir" v-model="state.finish" />
+              <v-date-input variant="outlined" density="compact" label="Tgl. Berakhir" v-model="state.finish" />
             </v-col>
             <v-col cols="12" md="6" sm="12">
               <v-text-field v-model="state.description" placeholder="Keterangan" density="compact" variant="outlined"

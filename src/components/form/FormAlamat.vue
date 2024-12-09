@@ -2,7 +2,6 @@
 import { useAuthStore } from '@/stores/apps/auth';
 import { ref, computed } from 'vue';
 import SelectField from '@/components/form-input/SelectField.vue'
-import DatePickerField from '@/components/form-input/DatePickerField.vue'
 
 // Inisialisasi store
 const store = useAuthStore();
@@ -37,9 +36,8 @@ const submitAlamat = () => {
             hide-details inset />
         </v-col>
 
-        <!-- Conditionally render the DatePickerField if address is not permanent -->
         <v-col cols="12" md="6" sm="12" v-if="!form.ispermanent">
-          <DatePickerField label="ID Expired" v-model="form.idexpired" />
+          <v-date-input label="ID Expired" v-model="form.idexpired" density="compact" variant="outlined"/>
         </v-col>
 
         <v-col cols="12" :md="form.ispermanent ? 12 : 6" sm="12">

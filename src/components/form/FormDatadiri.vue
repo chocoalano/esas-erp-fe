@@ -1,7 +1,6 @@
 <script setup>
 import { useAuthStore } from '@/stores/apps/auth';
 import { ref, computed } from 'vue';
-import DatePickerField from '@/components/form-input/DatePickerField.vue'
 import SelectField from '@/components/form-input/SelectField.vue'
 
 // Inisialisasi store
@@ -82,7 +81,7 @@ const submitDataDiri = () => {
           <v-text-field label="Tempat lahir" variant="outlined" density="compact" v-model="form.placebirth" />
         </v-col>
         <v-col cols="12" md="4" sm="12">
-          <DatePickerField label="Tanggal lahir" v-model="form.datebirth" />
+          <v-date-input variant="outlined" density="compact" label="Tanggal lahir" v-model="form.datebirth" />
         </v-col>
         <v-col cols="12" md="4" sm="12">
           <SelectField label="Jenis Kelamin" :items="jenis_kelamin" v-model="form.gender" />

@@ -2,7 +2,6 @@
 import { useAuthStore } from '@/stores/apps/auth';
 import { ref, computed } from 'vue';
 import SelectField from '@/components/form-input/SelectField.vue'
-import DatePickerField from '@/components/form-input/DatePickerField.vue'
 import Switch from '../form-input/Switch.vue';
 
 // Inisialisasi store
@@ -42,13 +41,13 @@ const submitInformal = () => {
               <v-text-field v-model="state.name" placeholder="Instansi" density="compact" variant="outlined" rounded="0"/>
             </v-col>
             <v-col cols="12" md="3" sm="12">
-              <DatePickerField label="Tgl. Mulai" v-model="state.start" rounded="0"/>
+              <v-date-input variant="outlined" density="compact" label="Tgl. Mulai" v-model="state.start" rounded="0"/>
             </v-col>
             <v-col cols="12" md="3" sm="12">
-              <DatePickerField label="Tgl. Selesai" v-model="state.finish" rounded="0"/>
+              <v-date-input variant="outlined" density="compact" label="Tgl. Selesai" v-model="state.finish" rounded="0"/>
             </v-col>
             <v-col cols="12" md="3" sm="12">
-              <DatePickerField label="Masa Berlaku" v-model="state.expired" rounded="0"/>
+              <v-date-input variant="outlined" density="compact" label="Masa Berlaku" v-model="state.expired" rounded="0"/>
             </v-col>
             <v-col cols="12" md="3" sm="12">
               <SelectField label="Jenis" :items="jenis" v-model="state.type" rounded="0"/>
