@@ -152,6 +152,10 @@ const isRowEditable = (id) => editableRows.value.includes(id);
     </template>
 
     <!-- Row fields with editable state -->
+    <template v-slot:item.date="{ item }">
+      <v-text-field label="Pilih Grup Absen" :items="groupOptions" v-model="item.date"
+        :disabled="!isRowEditable(item.id)" class="mt-5" type="date" variant="outlined" density="compact" />
+    </template>
     <template v-slot:item.group_attendance.name="{ item }">
       <SelectField label="Pilih Grup Absen" :items="groupOptions" v-model="item.group_attendance.id"
         :disabled="!isRowEditable(item.id)" class="mt-5" />
