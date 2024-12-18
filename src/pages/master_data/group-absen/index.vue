@@ -154,7 +154,7 @@ const isRowEditable = (id) => editableRows.value.includes(id);
               <SelectSearchField label="Pengguna" :items="userOptions" v-model="item.group_users" multiple chips
                 clearable />
               <v-btn class="mt-2" type="submit" block color="primary" :loading="loadingUser"
-                v-if="hasPosition('SPV MAINTENANCE') || hasPosition('ADMIN WAREHOUSE') || hasPosition('ADMIN PRODUKSI') || hasRole('Developer') || hasRole('Administrator')">
+                v-if="hasRole('Admin-Produksi') || hasRole('Developer') || hasRole('Administrator')">
                 Simpan
               </v-btn>
             </v-form>
