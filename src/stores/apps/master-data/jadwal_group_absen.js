@@ -8,6 +8,7 @@ export const useJadwalGroupAbsenStore = defineStore('jadwal_group_absen', {
     totaldata: 0,
     groupOptions: [],
     jamOptions: [],
+    userOptions: [],
     loading: false,
     errors: [],
   }),
@@ -39,7 +40,21 @@ export const useJadwalGroupAbsenStore = defineStore('jadwal_group_absen', {
         this.getJadwalGroupAbsen()
       }
     },
-    // Action to handle form submission
+    async get_attr_form() {
+      try {
+        const url = `/web/attendance-group-schedule-forms`
+        const { status, data } = await api.get(url);
+        if (status === 200) {
+          this.groupOptions = data.group ?? [];
+          this.jamOptions = data.time ?? [];
+          this.userOptions = data.user ?? [];
+        } else {
+          console.warn('Unexpected status code:', status);
+        }
+      } catch (error) {
+        console.error('Error fetching form attributes:', error);
+      }
+    },
     async submitForm(dataform) {
       this.loading = true;
       try {

@@ -63,6 +63,20 @@ export const routes = [
         name: 'jadwal_group_absen',
         meta: { requiresAuth: true },
         component: () => import('@/pages/master_data/jadwal-group-absen/index.vue'),
+        children: [
+          {
+            path: '',
+            name: 'jadwal-data',
+            meta: { requiresAuth: true },
+            component: () => import('@/pages/master_data/jadwal-group-absen/list.vue'),
+          },
+          {
+            path: '/create',
+            name: 'jadwal-create',
+            meta: { requiresAuth: true },
+            component: () => import('@/pages/master_data/jadwal-group-absen/create.vue'),
+          },
+        ]
       },
       {
         path: 'absen',
